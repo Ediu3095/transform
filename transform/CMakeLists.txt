@@ -31,3 +31,19 @@ target_compile_options(
 #   PRIVATE
 #     tl::expected
 # )
+
+
+add_executable(test ${SOURCES} ${HEADERS})
+target_include_directories(
+  test
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+)
+target_compile_options(
+  test
+  PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Werror
+)
