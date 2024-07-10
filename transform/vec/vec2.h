@@ -52,7 +52,7 @@ template <typename T> class Vec<L, T> {
   explicit constexpr Vec(T sca) noexcept;
   explicit constexpr Vec(T sca1, T sca2) noexcept;
 
-  // --- Conversion sca constructors ---
+  // --- Conversion scalar constructors ---
   template <typename U> explicit constexpr Vec(Vec<1, U> const& vec) noexcept;
 
   template <typename A, typename B> explicit constexpr Vec(A sca1, B sca2) noexcept;
@@ -210,9 +210,9 @@ template<typename T> constexpr T const& Vec<L, T>::y() const noexcept { return t
 template<typename T> constexpr T const& Vec<L, T>::g() const noexcept { return this->y_; }  // NOLINT(*-identifier-naming)
 template<typename T> constexpr T const& Vec<L, T>::t() const noexcept { return this->y_; }  // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr void Vec<L, T>::set_x(T sca) const noexcept { this->vec.set_x(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_r(T sca) const noexcept { this->vec.set_r(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_s(T sca) const noexcept { this->vec.set_s(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_x(T sca) const noexcept { this->vec_.set_x(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_r(T sca) const noexcept { this->vec_.set_r(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_s(T sca) const noexcept { this->vec_.set_s(sca); }  // NOLINT(*-identifier-naming)
 
 template<typename T> constexpr void Vec<L, T>::set_y(T sca) const noexcept { this->y_ = sca; }  // NOLINT(*-identifier-naming)
 template<typename T> constexpr void Vec<L, T>::set_g(T sca) const noexcept { this->y_ = sca; }  // NOLINT(*-identifier-naming)
@@ -226,11 +226,15 @@ template <typename T> constexpr Vec<L, T>::Vec(Vec const& vec) : vec_(vec), y_(v
 template <typename T> constexpr Vec<L, T>::Vec(T sca) noexcept : vec_(sca), y_(sca) {}
 template <typename T> constexpr Vec<L, T>::Vec(T sca1, T sca2) noexcept : vec_(sca1), y_(sca2) {}
 
-template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(A sca1, B sca2)                               noexcept : vec_(static_cast<T>(sca1)),     y_(static_cast<T>(sca2))     {}
-template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(Vec<1, A> const& vec1, B sca2)                noexcept : vec_(static_cast<T>(vec1[0])), y_(static_cast<T>(sca2))     {}
-template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(A sca1, Vec<1, B> const& vec2)                noexcept : vec_(static_cast<T>(sca1)),     y_(static_cast<T>(vec2[0])) {}
-template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(Vec<1, A> const& vec1, Vec<1, B> const& vec2) noexcept : vec_(static_cast<T>(vec1[0])), y_(static_cast<T>(vec2[0])) {}
+// --- Conversion scalar constructors ---
+template <typename T> template <typename U> constexpr Vec<L, T>::Vec(Vec<1, U> const& vec) noexcept : vec_(vec), y_(static_cast<T>(vec[0])) {}
 
+template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(A sca1, B sca2)                               noexcept : vec_(sca1), y_(static_cast<T>(sca2))    {}
+template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(Vec<1, A> const& vec1, B sca2)                noexcept : vec_(vec1), y_(static_cast<T>(sca2))    {}
+template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(A sca1, Vec<1, B> const& vec2)                noexcept : vec_(sca1), y_(static_cast<T>(vec2[0])) {}
+template <typename T> template <typename A, typename B> constexpr Vec<L, T>::Vec(Vec<1, A> const& vec1, Vec<1, B> const& vec2) noexcept : vec_(vec1), y_(static_cast<T>(vec2[0])) {}
+
+// --- Conversion vector constructors ---
 template <typename T> template <usize M, typename U> constexpr Vec<L, T>::Vec(Vec<M, U> const& vec) noexcept : vec_(vec), y_(static_cast<T>(vec[L - 1])) {}
 
 // --- Unary arithmetic operators ---
@@ -242,23 +246,23 @@ template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::oper
 template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator/=(U sca) { this->vec_ /= static_cast<T>(sca); this->y_ /= static_cast<T>(sca); return *this; }
 template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator%=(U sca) { this->vec_ %= static_cast<T>(sca); this->y_ %= static_cast<T>(sca); return *this; }
 
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator+=(Vec<1, U> const& vec) { this->vec_ += static_cast<T>(vec[0]); this->x += static_cast<T>(vec[0]); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator-=(Vec<1, U> const& vec) { this->vec_ -= static_cast<T>(vec[0]); this->x -= static_cast<T>(vec[0]); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator*=(Vec<1, U> const& vec) { this->vec_ *= static_cast<T>(vec[0]); this->x *= static_cast<T>(vec[0]); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator/=(Vec<1, U> const& vec) { this->vec_ /= static_cast<T>(vec[0]); this->x /= static_cast<T>(vec[0]); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator%=(Vec<1, U> const& vec) { this->vec_ %= static_cast<T>(vec[0]); this->x %= static_cast<T>(vec[0]); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator+=(Vec<1, U> const& vec) { this->vec_ += static_cast<T>(vec[0]); this->y_ += static_cast<T>(vec[0]); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator-=(Vec<1, U> const& vec) { this->vec_ -= static_cast<T>(vec[0]); this->y_ -= static_cast<T>(vec[0]); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator*=(Vec<1, U> const& vec) { this->vec_ *= static_cast<T>(vec[0]); this->y_ *= static_cast<T>(vec[0]); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator/=(Vec<1, U> const& vec) { this->vec_ /= static_cast<T>(vec[0]); this->y_ /= static_cast<T>(vec[0]); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator%=(Vec<1, U> const& vec) { this->vec_ %= static_cast<T>(vec[0]); this->y_ %= static_cast<T>(vec[0]); return *this; }
 
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator+=(Vec<L, U> const& vec) { this->vec_ += static_cast<T>(vec.vec_); this->x += static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator-=(Vec<L, U> const& vec) { this->vec_ -= static_cast<T>(vec.vec_); this->x -= static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator*=(Vec<L, U> const& vec) { this->vec_ *= static_cast<T>(vec.vec_); this->x *= static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator/=(Vec<L, U> const& vec) { this->vec_ /= static_cast<T>(vec.vec_); this->x /= static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator%=(Vec<L, U> const& vec) { this->vec_ %= static_cast<T>(vec.vec_); this->x %= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator+=(Vec<L, U> const& vec) { this->vec_ += vec.vec_; this->y_ += static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator-=(Vec<L, U> const& vec) { this->vec_ -= vec.vec_; this->y_ -= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator*=(Vec<L, U> const& vec) { this->vec_ *= vec.vec_; this->y_ *= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator/=(Vec<L, U> const& vec) { this->vec_ /= vec.vec_; this->y_ /= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator%=(Vec<L, U> const& vec) { this->vec_ %= vec.vec_; this->y_ %= static_cast<T>(vec.y_); return *this; }
 
 template <typename T> constexpr Vec<L, T>& Vec<L, T>::operator++() { ++this->vec_; ++this->y_; return *this; }
-template <typename T> constexpr Vec<L, T>& Vec<L, T>::operator--() { ++this->vec_; ++this->y_; return *this; }
+template <typename T> constexpr Vec<L, T>& Vec<L, T>::operator--() { --this->vec_; --this->y_; return *this; }
 
 template <typename T> constexpr Vec<L, T> Vec<L, T>::operator++(int) { Vec<L, T> result(*this); ++(*this); return result; }
-template <typename T> constexpr Vec<L, T> Vec<L, T>::operator--(int) { Vec<L, T> result(*this); ++(*this); return result; }
+template <typename T> constexpr Vec<L, T> Vec<L, T>::operator--(int) { Vec<L, T> result(*this); --(*this); return result; }
 
 // --- Unary bit operators ---
 template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator&= (U sca) { this->vec_ &=  static_cast<T>(sca); this->y_ &=  static_cast<T>(sca); return *this; }
@@ -273,11 +277,11 @@ template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::oper
 template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator<<=(Vec<1, U> const& vec) { this->vec_ <<= static_cast<T>(vec[0]); this->y_ <<= static_cast<T>(vec[0]); return *this; }
 template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator>>=(Vec<1, U> const& vec) { this->vec_ >>= static_cast<T>(vec[0]); this->y_ >>= static_cast<T>(vec[0]); return *this; }
 
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator&= (Vec<L, U> const& vec) { this->vec_ &=  static_cast<T>(vec.vec_); this->y_ &=  static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator|= (Vec<L, U> const& vec) { this->vec_ |=  static_cast<T>(vec.vec_); this->y_ |=  static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator^= (Vec<L, U> const& vec) { this->vec_ ^=  static_cast<T>(vec.vec_); this->y_ ^=  static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator<<=(Vec<L, U> const& vec) { this->vec_ <<= static_cast<T>(vec.vec_); this->y_ <<= static_cast<T>(vec.y_); return *this; }
-template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator>>=(Vec<L, U> const& vec) { this->vec_ >>= static_cast<T>(vec.vec_); this->y_ >>= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator&= (Vec<L, U> const& vec) { this->vec_ &=  vec.vec_; this->y_ &=  static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator|= (Vec<L, U> const& vec) { this->vec_ |=  vec.vec_; this->y_ |=  static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator^= (Vec<L, U> const& vec) { this->vec_ ^=  vec.vec_; this->y_ ^=  static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator<<=(Vec<L, U> const& vec) { this->vec_ <<= vec.vec_; this->y_ <<= static_cast<T>(vec.y_); return *this; }
+template <typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator>>=(Vec<L, U> const& vec) { this->vec_ >>= vec.vec_; this->y_ >>= static_cast<T>(vec.y_); return *this; }
 
 // --- Unary arithmetic operators ---
 template <typename T> constexpr Vec<L, T> operator+(Vec<L, T> const& vec) { return vec; }
@@ -356,5 +360,7 @@ constexpr Vec<L, bool> operator&&(Vec<L, bool> const& vec1, Vec<L, bool> const& 
 constexpr Vec<L, bool> operator||(Vec<L, bool> const& vec1, Vec<L, bool> const& vec2) { return Vec<L, bool>(Vec<L - 1, bool>(vec1) || Vec<L - 1, bool>(vec2), vec1[L - 1] || vec2[L - 1]); }
 
 }  // namespace tf
+
+#undef L
 
 #endif  // TRANSFORM_VEC_VEC2_H_

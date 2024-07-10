@@ -181,10 +181,10 @@ template <typename T> template <typename U> constexpr Vec<1, T>& Vec<1, T>::oper
 template <typename T> template <typename U> constexpr Vec<1, T>& Vec<1, T>::operator%=(Vec<1, U> const& vec) { this->x_ %= static_cast<T>(vec.x_); return *this; }
 
 template <typename T> constexpr Vec<1, T>& Vec<1, T>::operator++() { ++this->x_; return *this; }
-template <typename T> constexpr Vec<1, T>& Vec<1, T>::operator--() { ++this->x_; return *this; }
+template <typename T> constexpr Vec<1, T>& Vec<1, T>::operator--() { --this->x_; return *this; }
 
 template <typename T> constexpr Vec<1, T> Vec<1, T>::operator++(int) { Vec<1, T> result(*this); ++(*this); return result; }
-template <typename T> constexpr Vec<1, T> Vec<1, T>::operator--(int) { Vec<1, T> result(*this); ++(*this); return result; }
+template <typename T> constexpr Vec<1, T> Vec<1, T>::operator--(int) { Vec<1, T> result(*this); --(*this); return result; }
 
 // --- Unary bit operators ---
 template <typename T> template <typename U> constexpr Vec<1, T>& Vec<1, T>::operator&= (U sca) { this->x_ &=  static_cast<T>(sca); return *this; }
