@@ -35,9 +35,20 @@ if (BUILD_TESTING)
       GTest::gtest_main
       ${PROJECT_NAME}::${PROJECT_NAME}
   )
+  add_cc_test(
+    NAME
+      vec4_test
+    SRCS
+      ${TEST_DIR}/vec/vec4.cc
+    DEPS
+      GTest::gmock
+      GTest::gtest_main
+      ${PROJECT_NAME}::${PROJECT_NAME}
+  )
   
   include(GoogleTest)
   gtest_discover_tests(vec1_test)
   gtest_discover_tests(vec2_test)
   gtest_discover_tests(vec3_test)
+  gtest_discover_tests(vec4_test)
 endif()

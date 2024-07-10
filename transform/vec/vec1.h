@@ -40,6 +40,9 @@ template <typename T> class Vec<1, T> {
   // --- Explicit basic constructors ---
   explicit constexpr Vec(T sca) noexcept;
 
+  // --- Conversion scalar constructors ---
+  template <typename U> explicit constexpr Vec(U sca) noexcept;
+
   // --- Conversion vector constructors ---
   template <usize M, typename U> explicit constexpr Vec(Vec<M, U> const& vec) noexcept;
 
@@ -161,6 +164,9 @@ template <typename T> constexpr Vec<1, T>::Vec(Vec const& vec) : x_(vec[0]) {}
 
 // --- Explicit basic constructors ---
 template <typename T> constexpr Vec<1, T>::Vec(T sca) noexcept : x_(sca) {}
+
+// --- Conversion scalar constructors ---
+template <typename T> template <typename U> constexpr Vec<1, T>::Vec(U sca) noexcept : x_(static_cast<T>(sca)) {}
 
 // --- Conversion vector constructors ---
 template <typename T> template <usize M, typename U> constexpr Vec<1, T>::Vec(Vec<M, U> const& vec) noexcept : x_(static_cast<T>(vec[0])) {}
