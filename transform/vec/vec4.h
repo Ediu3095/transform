@@ -42,20 +42,20 @@ template <typename T> class Vec<L, T> {
   constexpr T const& p() const noexcept;  // NOLINT(*-identifier-naming)
   constexpr T const& q() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_x(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_y(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_z(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_w(T sca) const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_x(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_y(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_z(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_w(T sca) noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_r(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_g(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_b(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_a(T sca) const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_r(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_g(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_b(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_a(T sca) noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_s(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_t(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_p(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_q(T sca) const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_s(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_t(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_p(T sca) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_q(T sca) noexcept;  // NOLINT(*-identifier-naming)
 
   // --- Implicit basic constructors ---
   constexpr Vec() noexcept;
@@ -257,30 +257,30 @@ template<typename T> constexpr T const& Vec<L, T>::y() const noexcept { return t
 template<typename T> constexpr T const& Vec<L, T>::z() const noexcept { return this->vec_.z(); }  // NOLINT(*-identifier-naming)
 template<typename T> constexpr T const& Vec<L, T>::w() const noexcept { return this->w_; };       // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr T const& Vec<L, T>::r() const noexcept { return this->vec_.r(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::g() const noexcept { return this->vec_.g(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::b() const noexcept { return this->vec_.b(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::a() const noexcept { return this->w_; };       // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::r() const noexcept { return this->vec_.x(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::g() const noexcept { return this->vec_.y(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::b() const noexcept { return this->vec_.z(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::a() const noexcept { return this->w(); };      // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr T const& Vec<L, T>::s() const noexcept { return this->vec_.s(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::t() const noexcept { return this->vec_.t(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::p() const noexcept { return this->vec_.p(); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<L, T>::q() const noexcept { return this->w_; };       // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::s() const noexcept { return this->vec_.x(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::t() const noexcept { return this->vec_.y(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::p() const noexcept { return this->vec_.z(); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<L, T>::q() const noexcept { return this->w(); };      // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr void Vec<L, T>::set_x(T sca) const noexcept { this->vec_.set_x(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_y(T sca) const noexcept { this->vec_.set_y(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_z(T sca) const noexcept { this->vec_.set_z(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_w(T sca) const noexcept { this->w_ = sca; }         // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_x(T sca) noexcept { this->vec_.set_x(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_y(T sca) noexcept { this->vec_.set_y(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_z(T sca) noexcept { this->vec_.set_z(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_w(T sca) noexcept { this->w_ = sca; }         // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr void Vec<L, T>::set_r(T sca) const noexcept { this->vec_.set_r(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_g(T sca) const noexcept { this->vec_.set_g(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_b(T sca) const noexcept { this->vec_.set_b(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_a(T sca) const noexcept { this->w_ = sca; }         // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_r(T sca) noexcept { this->vec_.set_x(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_g(T sca) noexcept { this->vec_.set_y(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_b(T sca) noexcept { this->vec_.set_z(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_a(T sca) noexcept { this->set_w(sca); }       // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr void Vec<L, T>::set_s(T sca) const noexcept { this->vec_.set_s(sca); }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<L, T>::set_t(T sca) const noexcept { this->vec_.set_t(sca); }  // NOLINT(*-identifier-naming)  
-template<typename T> constexpr void Vec<L, T>::set_p(T sca) const noexcept { this->vec_.set_p(sca); }  // NOLINT(*-identifier-naming)  
-template<typename T> constexpr void Vec<L, T>::set_q(T sca) const noexcept { this->w_ = sca; }         // NOLINT(*-identifier-naming)  
+template<typename T> constexpr void Vec<L, T>::set_s(T sca) noexcept { this->vec_.set_x(sca); }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr void Vec<L, T>::set_t(T sca) noexcept { this->vec_.set_y(sca); }  // NOLINT(*-identifier-naming)  
+template<typename T> constexpr void Vec<L, T>::set_p(T sca) noexcept { this->vec_.set_z(sca); }  // NOLINT(*-identifier-naming)  
+template<typename T> constexpr void Vec<L, T>::set_q(T sca) noexcept { this->set_w(sca); }       // NOLINT(*-identifier-naming)  
 
 // --- Implicit basic constructors ---
 template <typename T> constexpr Vec<L, T>::Vec() noexcept : vec_(), w_(0) {}

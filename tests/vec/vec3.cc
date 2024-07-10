@@ -12,82 +12,95 @@ TEST(VecTest, Vec3) {
   Vec3<i32> constexpr kVec6(6, 24,   96);
   Vec3<i32> constexpr kVec8(8, 64, 2048);
 
-  Vec3<i32> vecn(kVec1);
+  Vec3<i32> vecn;
 
-  EXPECT_EQ(Vec3<i32>(vecn).x(), 1);
-  EXPECT_EQ(Vec3<i32>(vecn).y(), 2);
-  EXPECT_EQ(Vec3<i32>(vecn).z(), 4);
+  vecn.set_x(kVec1[0]);
+  vecn.set_y(kVec1[1]);
+  vecn.set_z(kVec1[2]);
 
-  EXPECT_FLOAT_EQ(Vec3<f32>(vecn).x(), 1.0F);
-  EXPECT_FLOAT_EQ(Vec3<f32>(vecn).y(), 2.0F);
-  EXPECT_FLOAT_EQ(Vec3<f32>(vecn).z(), 4.0F);
+  EXPECT_EQ(kVec1.x(), 1);
+  EXPECT_EQ(kVec1.y(), 2);
+  EXPECT_EQ(kVec1.z(), 4);
 
+  EXPECT_EQ(kVec1.x(), kVec1.r());
+  EXPECT_EQ(kVec1.y(), kVec1.g());
+  EXPECT_EQ(kVec1.z(), kVec1.b());
+
+  EXPECT_EQ(kVec1.x(), kVec1.s());
+  EXPECT_EQ(kVec1.y(), kVec1.t());
+  EXPECT_EQ(kVec1.z(), kVec1.p());
+
+  EXPECT_FLOAT_EQ(Vec3<f32>(kVec1).x(), 1.0F);
+  EXPECT_FLOAT_EQ(Vec3<f32>(kVec1).y(), 2.0F);
+  EXPECT_FLOAT_EQ(Vec3<f32>(kVec1).z(), 4.0F);
+
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn += 2, kVec1 + 2);
   EXPECT_EQ(vecn -= 2, kVec1);
   EXPECT_EQ(vecn *= 2, kVec1 * 2);
   EXPECT_EQ(vecn /= 2, kVec1);
   EXPECT_EQ(vecn %= 2, kVec1 % 2);
-  EXPECT_EQ(vecn = kVec1, kVec1);
 
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn += Vec1<i32>(2), kVec1 + 2);
   EXPECT_EQ(vecn -= Vec1<i32>(2), kVec1);
   EXPECT_EQ(vecn *= Vec1<i32>(2), kVec1 * 2);
   EXPECT_EQ(vecn /= Vec1<i32>(2), kVec1);
   EXPECT_EQ(vecn %= Vec1<i32>(2), kVec1 % 2);
-  EXPECT_EQ(vecn = kVec1, kVec1);
 
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn += kVec2, kVec3);
   EXPECT_EQ(vecn *= kVec2, kVec6);
   EXPECT_EQ(vecn /= kVec2, kVec3);
   EXPECT_EQ(vecn %= kVec2, kVec1);
   EXPECT_EQ(vecn -= kVec2, -kVec1);
-  EXPECT_EQ(vecn = kVec1, kVec1);
 
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(++vecn, kVec1 + 1);
   EXPECT_EQ(vecn++, kVec1 + 1);
   EXPECT_EQ(--vecn, kVec1 + 1);
   EXPECT_EQ(vecn--, kVec1 + 1);
 
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn <<= 2, kVec1 << 2);
   EXPECT_EQ(vecn >>= 2, kVec1);
   EXPECT_EQ(vecn  &= 2, kVec1 & 2);
   EXPECT_EQ(vecn  |= 2, kVec1 & 2 | 2);
   EXPECT_EQ(vecn  ^= 2, kVec0);
-  EXPECT_EQ(vecn = kVec1, kVec1);
 
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn  &= kVec2, kVec0);
   EXPECT_EQ(vecn  |= kVec2, kVec2);
   EXPECT_EQ(vecn <<= kVec2, kVec8);
   EXPECT_EQ(vecn >>= kVec2, kVec2);
   EXPECT_EQ(vecn  ^= kVec2, kVec0);
-  EXPECT_EQ(vecn = kVec1, kVec1);
 
-  EXPECT_EQ(+vecn, Vec3<i32>(+vecn.x(), +vecn.y(), +vecn.z()));
-  EXPECT_EQ(-vecn, Vec3<i32>(-vecn.x(), -vecn.y(), -vecn.z()));
+  EXPECT_EQ(+kVec2, Vec3<i32>(+kVec2.x(), +kVec2.y(), +kVec2.z()));
+  EXPECT_EQ(-kVec2, Vec3<i32>(-kVec2.x(), -kVec2.y(), -kVec2.z()));
 
-  EXPECT_EQ(vecn + 1, Vec3<i32>(vecn.x() + 1, vecn.y() + 1, vecn.z() + 1));
-  EXPECT_EQ(vecn - 1, Vec3<i32>(vecn.x() - 1, vecn.y() - 1, vecn.z() - 1));
-  EXPECT_EQ(vecn * 1, Vec3<i32>(vecn.x() * 1, vecn.y() * 1, vecn.z() * 1));
-  EXPECT_EQ(vecn / 1, Vec3<i32>(vecn.x() / 1, vecn.y() / 1, vecn.z() / 1));
-  EXPECT_EQ(vecn % 1, Vec3<i32>(vecn.x() % 1, vecn.y() % 1, vecn.z() % 1));
+  EXPECT_EQ(kVec2 + 1, Vec3<i32>(kVec2.x() + 1, kVec2.y() + 1, kVec2.z() + 1));
+  EXPECT_EQ(kVec2 - 1, Vec3<i32>(kVec2.x() - 1, kVec2.y() - 1, kVec2.z() - 1));
+  EXPECT_EQ(kVec2 * 1, Vec3<i32>(kVec2.x() * 1, kVec2.y() * 1, kVec2.z() * 1));
+  EXPECT_EQ(kVec2 / 1, Vec3<i32>(kVec2.x() / 1, kVec2.y() / 1, kVec2.z() / 1));
+  EXPECT_EQ(kVec2 % 1, Vec3<i32>(kVec2.x() % 1, kVec2.y() % 1, kVec2.z() % 1));
 
-  EXPECT_EQ(1 + vecn, Vec3<i32>(1 + vecn.x(), 1 + vecn.y(), 1 + vecn.z()));
-  EXPECT_EQ(1 - vecn, Vec3<i32>(1 - vecn.x(), 1 - vecn.y(), 1 - vecn.z()));
-  EXPECT_EQ(1 * vecn, Vec3<i32>(1 * vecn.x(), 1 * vecn.y(), 1 * vecn.z()));
-  EXPECT_EQ(1 / vecn, Vec3<i32>(1 / vecn.x(), 1 / vecn.y(), 1 / vecn.z()));
-  EXPECT_EQ(1 % vecn, Vec3<i32>(1 % vecn.x(), 1 % vecn.y(), 1 % vecn.z()));
+  EXPECT_EQ(1 + kVec2, Vec3<i32>(1 + kVec2.x(), 1 + kVec2.y(), 1 + kVec2.z()));
+  EXPECT_EQ(1 - kVec2, Vec3<i32>(1 - kVec2.x(), 1 - kVec2.y(), 1 - kVec2.z()));
+  EXPECT_EQ(1 * kVec2, Vec3<i32>(1 * kVec2.x(), 1 * kVec2.y(), 1 * kVec2.z()));
+  EXPECT_EQ(1 / kVec2, Vec3<i32>(1 / kVec2.x(), 1 / kVec2.y(), 1 / kVec2.z()));
+  EXPECT_EQ(1 % kVec2, Vec3<i32>(1 % kVec2.x(), 1 % kVec2.y(), 1 % kVec2.z()));
 
-  EXPECT_EQ(vecn + Vec1<i32>(1), vecn + 1);
-  EXPECT_EQ(vecn - Vec1<i32>(1), vecn - 1);
-  EXPECT_EQ(vecn * Vec1<i32>(1), vecn * 1);
-  EXPECT_EQ(vecn / Vec1<i32>(1), vecn / 1);
-  EXPECT_EQ(vecn % Vec1<i32>(1), vecn % 1);
+  EXPECT_EQ(kVec2 + Vec1<i32>(1), kVec2 + 1);
+  EXPECT_EQ(kVec2 - Vec1<i32>(1), kVec2 - 1);
+  EXPECT_EQ(kVec2 * Vec1<i32>(1), kVec2 * 1);
+  EXPECT_EQ(kVec2 / Vec1<i32>(1), kVec2 / 1);
+  EXPECT_EQ(kVec2 % Vec1<i32>(1), kVec2 % 1);
 
-  EXPECT_EQ(Vec1<i32>(1) + vecn, 1 + vecn);
-  EXPECT_EQ(Vec1<i32>(1) - vecn, 1 - vecn);
-  EXPECT_EQ(Vec1<i32>(1) * vecn, 1 * vecn);
-  EXPECT_EQ(Vec1<i32>(1) / vecn, 1 / vecn);
-  EXPECT_EQ(Vec1<i32>(1) % vecn, 1 % vecn);
+  EXPECT_EQ(Vec1<i32>(1) + kVec2, 1 + kVec2);
+  EXPECT_EQ(Vec1<i32>(1) - kVec2, 1 - kVec2);
+  EXPECT_EQ(Vec1<i32>(1) * kVec2, 1 * kVec2);
+  EXPECT_EQ(Vec1<i32>(1) / kVec2, 1 / kVec2);
+  EXPECT_EQ(Vec1<i32>(1) % kVec2, 1 % kVec2);
 
   EXPECT_EQ(kVec1 + kVec2, kVec3);
   EXPECT_EQ(kVec3 * kVec2, kVec6);

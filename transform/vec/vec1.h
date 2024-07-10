@@ -25,12 +25,16 @@ template <typename T> class Vec<1, T> {
   constexpr T const& operator[](LengthType idx) const noexcept;
 
   constexpr T const& x() const noexcept;  // NOLINT(*-identifier-naming)
+
   constexpr T const& r() const noexcept;  // NOLINT(*-identifier-naming)
+
   constexpr T const& s() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_x(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_r(T sca) const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_s(T sca) const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_x(T sca) noexcept;  // NOLINT(*-identifier-naming)
+
+  constexpr void set_r(T sca) noexcept;  // NOLINT(*-identifier-naming)
+
+  constexpr void set_s(T sca) noexcept;  // NOLINT(*-identifier-naming)
 
   // --- Implicit basic constructors ---
   constexpr Vec() noexcept;
@@ -151,12 +155,16 @@ template <typename T> constexpr T&       Vec<1, T>::operator[](LengthType idx)  
 template <typename T> constexpr T const& Vec<1, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return this->x(); }
 
 template<typename T> constexpr T const& Vec<1, T>::x() const noexcept { return this->x_; }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<1, T>::r() const noexcept { return this->x_; }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr T const& Vec<1, T>::s() const noexcept { return this->x_; }  // NOLINT(*-identifier-naming)
 
-template<typename T> constexpr void Vec<1, T>::set_x(T sca) const noexcept { this->x_ = sca; }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<1, T>::set_r(T sca) const noexcept { this->x_ = sca; }  // NOLINT(*-identifier-naming)
-template<typename T> constexpr void Vec<1, T>::set_s(T sca) const noexcept { this->x_ = sca; }  // NOLINT(*-identifier-naming)
+template<typename T> constexpr T const& Vec<1, T>::r() const noexcept { return this->x(); }  // NOLINT(*-identifier-naming)
+
+template<typename T> constexpr T const& Vec<1, T>::s() const noexcept { return this->x(); }  // NOLINT(*-identifier-naming)
+
+template<typename T> constexpr void Vec<1, T>::set_x(T sca) noexcept { this->x_ = sca; }  // NOLINT(*-identifier-naming)
+
+template<typename T> constexpr void Vec<1, T>::set_r(T sca) noexcept { this->set_x(sca); }  // NOLINT(*-identifier-naming)
+
+template<typename T> constexpr void Vec<1, T>::set_s(T sca) noexcept { this->set_x(sca); }  // NOLINT(*-identifier-naming)
 
 // --- Implicit basic constructors ---
 template <typename T> constexpr Vec<1, T>::Vec() noexcept : x_(0) {}
