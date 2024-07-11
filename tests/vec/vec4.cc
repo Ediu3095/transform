@@ -74,6 +74,13 @@ TEST(VecTest, Vec4) {
   EXPECT_EQ(vecn  ^= 2, kVec0);
 
   EXPECT_EQ(vecn = kVec1, kVec1);
+  EXPECT_EQ(vecn <<= Vec1<i32>(2), kVec1 << 2);
+  EXPECT_EQ(vecn >>= Vec1<i32>(2), kVec1);
+  EXPECT_EQ(vecn  &= Vec1<i32>(2), kVec1 & 2);
+  EXPECT_EQ(vecn  |= Vec1<i32>(2), kVec1 & 2 | 2);
+  EXPECT_EQ(vecn  ^= Vec1<i32>(2), kVec0);
+
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn  &= kVec2, kVec0);
   EXPECT_EQ(vecn  |= kVec2, kVec2);
   EXPECT_EQ(vecn <<= kVec2, kVec8);
