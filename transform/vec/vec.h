@@ -5,12 +5,8 @@
 
 namespace tf {
 
-template <tf::usize L, typename T>
+template <usize L, typename T>
 class Vec;
-
-// Vec4 { x, y, z, w }
-// Vec4 { r, g, b, a }
-// Vec4 { s, t, p, q }
 
 }  // namespace tf
 
