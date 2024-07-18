@@ -8,16 +8,24 @@ template <typename T> using Vec5 = Vec<5, T>;
 template <typename T> using Vec6 = Vec<6, T>;
 
 TEST(VecTest, VecN) {
-  Vec6<i32> constexpr kVec0 ( 0,  0,  0,   0,    0,    0);
+  Vec6<i32> constexpr kVec0 { };
   Vec6<i32> constexpr kVec1 ( 1,  2,  4,   8,   16,   32);
   Vec6<i32> constexpr kVec2 ( 2,  4,  8,  16,   32,   64);
   Vec6<i32> constexpr kVec3 ( 3,  6, 12,  24,   48,   96);
-  Vec6<i32> constexpr kVec4 ( 4,  4,  4,   4,    4,    4);
+  Vec6<i32> constexpr kVec4 ( 4);
   Vec6<i32> constexpr kVec6 ( 6, 24, 96, 384, 1536, 6144);
   Vec6<i32> constexpr kVec16(16, 32, 64, 128,  256,  512);
 
-  Vec6<i32> vecn(kVec1);
+  Vec6<i32> vecn(kVec1.tail());
 
+  EXPECT_EQ(vecn[0],  2);
+  EXPECT_EQ(vecn[1],  4);
+  EXPECT_EQ(vecn[2],  8);
+  EXPECT_EQ(vecn[3], 16);
+  EXPECT_EQ(vecn[4], 32);
+  EXPECT_EQ(vecn[5],  0);
+
+  EXPECT_EQ(vecn = kVec1, kVec1);
   EXPECT_EQ(vecn.head(), 1);
   EXPECT_EQ(vecn.tail(), Vec5<i32>(2, 4, 8, 16, 32));
 

@@ -5,8 +5,7 @@
 
 namespace tf {
 
-template <usize L, typename T>
-class Vec;
+template <usize L, typename T> class Vec;
 
 }  // namespace tf
 

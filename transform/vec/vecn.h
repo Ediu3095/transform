@@ -17,7 +17,7 @@ template <usize L, typename T> class Vec {
   // --- Types ---
   using ValueType  = T;
   using Type       = Vec<L, T>;
-  using LengthType = tf::usize;
+  using LengthType = usize;
 
   // --- Component access ---
   static constexpr LengthType Length() noexcept { return L; }
@@ -38,11 +38,14 @@ template <usize L, typename T> class Vec {
 
   // --- Explicit basic constructors ---
   explicit constexpr Vec(T sca) noexcept;
+  explicit constexpr Vec(Vec<1, T> const& vec) noexcept;
 
   // --- Conversion constructors ---
-  template          <typename A, typename... B> explicit constexpr Vec(       A  head, B... tail) noexcept;
-  template          <typename A, typename... B> explicit constexpr Vec(Vec<1, A> head, B... tail) noexcept;
-  template <usize M, typename A, typename... B> explicit constexpr Vec(Vec<M, A> head, B... tail) noexcept;
+  template          <typename A, typename B, typename... C> explicit constexpr Vec(       A         head,        B         tail1, C... tail2) noexcept;
+  template <usize M, typename A, typename B, typename... C> explicit constexpr Vec(       A         head, Vec<M, B> const& tail1, C... tail2) noexcept;
+  template          <typename A, typename B, typename... C> explicit constexpr Vec(Vec<1, A> const& head,        B         tail1, C... tail2) noexcept;
+  template <usize M, typename A, typename B, typename... C> explicit constexpr Vec(Vec<1, A> const& head, Vec<M, B> const& tail1, C... tail2) noexcept;
+  template <usize M, typename A,             typename... B> explicit constexpr Vec(Vec<M, A> const& head,                         B... tail)  noexcept;
 
   // --- Destructor ---
   inline ~Vec() noexcept = default;
@@ -100,7 +103,7 @@ template <usize L, typename T> class Vec {
 template <usize L, typename T> constexpr Vec<L, T> operator+(Vec<L, T> const& vec);
 template <usize L, typename T> constexpr Vec<L, T> operator-(Vec<L, T> const& vec);
 
-// --- Binary atithmetic operators ---
+// --- Binary arithmetic operators ---
 template <usize L, typename T> constexpr Vec<L, T> operator+(Vec<L, T> const& vec, T sca);
 template <usize L, typename T> constexpr Vec<L, T> operator-(Vec<L, T> const& vec, T sca);
 template <usize L, typename T> constexpr Vec<L, T> operator*(Vec<L, T> const& vec, T sca);
@@ -191,12 +194,15 @@ template <usize L, typename T> constexpr Vec<L, T>::Vec() noexcept : head_(), ta
 template <usize L, typename T> constexpr Vec<L, T>::Vec(Vec const& vec) : head_(vec.head()), tail_(vec.tail()) {}
 
 // --- Explicit basic constructors ---
-template <usize L, typename T> constexpr Vec<L, T>::Vec(T sca) noexcept : head_(sca), tail_(sca) {}
+template <usize L, typename T> constexpr Vec<L, T>::Vec(       T         sca) noexcept : head_(sca       ), tail_(sca) {}
+template <usize L, typename T> constexpr Vec<L, T>::Vec(Vec<1, T> const& vec) noexcept : head_(vec.head()), tail_(   ) {}
 
 // --- Conversion constructors ---
-template <usize L, typename T> template          <typename A, typename... B> constexpr Vec<L, T>::Vec(       A  head, B... tail) noexcept : head_(head       ), tail_(             tail...) {}
-template <usize L, typename T> template          <typename A, typename... B> constexpr Vec<L, T>::Vec(Vec<1, A> head, B... tail) noexcept : head_(head.head()), tail_(             tail...) {}
-template <usize L, typename T> template <usize M, typename A, typename... B> constexpr Vec<L, T>::Vec(Vec<M, A> head, B... tail) noexcept : head_(head.head()), tail_(head.tail(), tail...) {}
+template <usize L, typename T> template          <typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(       A         head,        B         tail1, C... tail2) noexcept : head_(head       ), tail_(Vec<1, B>(tail1), tail2...) {}
+template <usize L, typename T> template <usize M, typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(       A         head, Vec<M, B> const& tail1, C... tail2) noexcept : head_(head       ), tail_(tail1,            tail2...) {}
+template <usize L, typename T> template          <typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(Vec<1, A> const& head,        B         tail1, C... tail2) noexcept : head_(head.head()), tail_(Vec<1, B>(tail1), tail2...) {}
+template <usize L, typename T> template <usize M, typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(Vec<1, A> const& head, Vec<M, B> const& tail1, C... tail2) noexcept : head_(head.head()), tail_(tail1,            tail2...) {}
+template <usize L, typename T> template <usize M, typename A,             typename... B> constexpr Vec<L, T>::Vec(Vec<M, A> const& head,                         B... tail)  noexcept : head_(head.head()), tail_(head.tail(),       tail...) {}
 
 // --- Unary arithmetic operators ---
 template <usize L, typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator=(Vec<L, U> const& vec) { this->head_ = static_cast<T>(vec.head()); this->tail_ = vec.tail(); return *this; }
@@ -248,7 +254,7 @@ template <usize L, typename T> template <typename U> constexpr Vec<L, T>& Vec<L,
 template <usize L, typename T> constexpr Vec<L, T> operator+(Vec<L, T> const& vec) { return vec; }
 template <usize L, typename T> constexpr Vec<L, T> operator-(Vec<L, T> const& vec) { return Vec<L, T>(-vec.head(), -vec.tail()); }
 
-// --- Binary atithmetic operators ---
+// --- Binary arithmetic operators ---
 template <usize L, typename T> constexpr Vec<L, T> operator+(Vec<L, T> const& vec, T sca) { return Vec<L, T>(vec.head() + sca, vec.tail() + sca); }
 template <usize L, typename T> constexpr Vec<L, T> operator-(Vec<L, T> const& vec, T sca) { return Vec<L, T>(vec.head() - sca, vec.tail() - sca); }
 template <usize L, typename T> constexpr Vec<L, T> operator*(Vec<L, T> const& vec, T sca) { return Vec<L, T>(vec.head() * sca, vec.tail() * sca); }

@@ -5,14 +5,16 @@
 namespace tf::test {
 
 TEST(VecTest, Vec1) {
-  Vec1<i32> constexpr kVec0(0);
+  Vec1<i32> constexpr kVec0{ };
   Vec1<i32> constexpr kVec1(1);
   Vec1<i32> constexpr kVec2(2);
   Vec1<i32> constexpr kVec3(3);
   Vec1<i32> constexpr kVec6(6);
   Vec1<i32> constexpr kVec8(8);
 
-  Vec1<i32> vecn;
+  Vec1<i32> vecn{};
+
+  EXPECT_EQ(vecn[0], 0);
 
   vecn.set_x(kVec1[0]);
 
