@@ -10,7 +10,7 @@ TEST(VecTest, Vec3) {
   Vec3<i32> constexpr kVec2(2,  4,    8);
   Vec3<i32> constexpr kVec3(3,  6,   12);
   Vec3<i32> constexpr kVec6(6, 24,   96);
-  Vec3<i32> constexpr kVec8(8, 64, 2048);
+  Vec3<i32> constexpr kVec8(Vec2<i32>(8, 64), 2048);
 
   Vec3<i32> vecn(kVec1.tail());
 

@@ -3,6 +3,7 @@
 
 #include <cassert>
 
+#include "transform/types.h"
 #include "transform/vec/vec.h"
 
 namespace tf {
@@ -45,11 +46,15 @@ template <typename T> class Vec<1, T> {
   explicit constexpr Vec(T sca) noexcept;
 
   // --- Conversion constructors ---
-  template          <typename A, typename... B> explicit constexpr Vec(       A         head, B... /* unused */) noexcept;
-  template <usize M, typename A, typename... B> explicit constexpr Vec(Vec<M, A> const& head, B... /* unused */) noexcept;
+  template <typename A> explicit constexpr Vec(A head) noexcept;
+
+  template <usize M, typename A> explicit constexpr Vec(Vec<M, A> const& vec) noexcept;
 
   // --- Destructor ---
   inline ~Vec() noexcept = default;
+
+  // --- Factory ---
+  static constexpr Vec<1, T> Fill(T sca) noexcept { return Vec<1, T>() + sca; }
 
   // --- Unary arithmetic operators ---
   constexpr Vec<1, T>& operator=(Vec const& vec)     = default;
@@ -171,8 +176,9 @@ template <typename T> constexpr Vec<1, T>::Vec(Vec const& vec) : head_(vec.head_
 template <typename T> constexpr Vec<1, T>::Vec(T sca) noexcept : head_(sca) {}
 
 // --- Conversion constructors ---
-template <typename T> template          <typename A, typename... B> constexpr Vec<1, T>::Vec(       A         head, B... /* unused */) noexcept : head_(static_cast<T>(head       )) {}
-template <typename T> template <usize M, typename A, typename... B> constexpr Vec<1, T>::Vec(Vec<M, A> const& head, B... /* unused */) noexcept : head_(static_cast<T>(head.head())) {}
+template <typename T> template <typename A> constexpr Vec<1, T>::Vec(A head) noexcept : head_(static_cast<T>(head)) {}
+
+template <typename T> template <usize M, typename A> constexpr Vec<1, T>::Vec(Vec<M, A> const& vec) noexcept : head_(static_cast<T>(vec.head())) {}
 
 // --- Unary arithmetic operators ---
 template <typename T> template <typename U> constexpr Vec<1, T>& Vec<1, T>::operator=(Vec<1, U> const& vec) { this->head_ = static_cast<T>(vec.head()); return *this; }

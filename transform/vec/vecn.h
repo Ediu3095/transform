@@ -3,6 +3,11 @@
 
 #include <cassert>
 
+#include "transform/types.h"
+#include "transform/vec/vec.h"
+#include "transform/vec/vec1.h"
+#include "transform/vec/vec2.h"
+#include "transform/vec/vec3.h"
 #include "transform/vec/vec4.h"
 
 namespace tf {
@@ -38,17 +43,17 @@ template <usize L, typename T> class Vec {
 
   // --- Explicit basic constructors ---
   explicit constexpr Vec(T sca) noexcept;
-  explicit constexpr Vec(Vec<1, T> const& vec) noexcept;
 
   // --- Conversion constructors ---
-  template          <typename A, typename B, typename... C> explicit constexpr Vec(       A         head,        B         tail1, C... tail2) noexcept;
-  template <usize M, typename A, typename B, typename... C> explicit constexpr Vec(       A         head, Vec<M, B> const& tail1, C... tail2) noexcept;
-  template          <typename A, typename B, typename... C> explicit constexpr Vec(Vec<1, A> const& head,        B         tail1, C... tail2) noexcept;
-  template <usize M, typename A, typename B, typename... C> explicit constexpr Vec(Vec<1, A> const& head, Vec<M, B> const& tail1, C... tail2) noexcept;
-  template <usize M, typename A,             typename... B> explicit constexpr Vec(Vec<M, A> const& head,                         B... tail)  noexcept;
+  template          <typename A, typename... B> explicit constexpr Vec(       A         head, B... tail) noexcept;
+  template          <typename A, typename... B> explicit constexpr Vec(Vec<1, A> const& head, B... tail) noexcept;
+  template <usize M, typename A, typename... B> explicit constexpr Vec(Vec<M, A> const& head, B... tail) noexcept;
 
   // --- Destructor ---
   inline ~Vec() noexcept = default;
+
+  // --- Factory ---
+  static constexpr Vec<L, T> Fill(T sca) noexcept { return Vec<L, T>() + sca; }
 
   // --- Unary arithmetic operators ---
   constexpr Vec<L, T>& operator=(Vec const& vec)     = default;
@@ -194,15 +199,12 @@ template <usize L, typename T> constexpr Vec<L, T>::Vec() noexcept : head_(), ta
 template <usize L, typename T> constexpr Vec<L, T>::Vec(Vec const& vec) : head_(vec.head()), tail_(vec.tail()) {}
 
 // --- Explicit basic constructors ---
-template <usize L, typename T> constexpr Vec<L, T>::Vec(       T         sca) noexcept : head_(sca       ), tail_(sca) {}
-template <usize L, typename T> constexpr Vec<L, T>::Vec(Vec<1, T> const& vec) noexcept : head_(vec.head()), tail_(   ) {}
+template <usize L, typename T> constexpr Vec<L, T>::Vec(T sca) noexcept : head_(sca), tail_() {}
 
 // --- Conversion constructors ---
-template <usize L, typename T> template          <typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(       A         head,        B         tail1, C... tail2) noexcept : head_(head       ), tail_(Vec<1, B>(tail1), tail2...) {}
-template <usize L, typename T> template <usize M, typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(       A         head, Vec<M, B> const& tail1, C... tail2) noexcept : head_(head       ), tail_(tail1,            tail2...) {}
-template <usize L, typename T> template          <typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(Vec<1, A> const& head,        B         tail1, C... tail2) noexcept : head_(head.head()), tail_(Vec<1, B>(tail1), tail2...) {}
-template <usize L, typename T> template <usize M, typename A, typename B, typename... C> constexpr Vec<L, T>::Vec(Vec<1, A> const& head, Vec<M, B> const& tail1, C... tail2) noexcept : head_(head.head()), tail_(tail1,            tail2...) {}
-template <usize L, typename T> template <usize M, typename A,             typename... B> constexpr Vec<L, T>::Vec(Vec<M, A> const& head,                         B... tail)  noexcept : head_(head.head()), tail_(head.tail(),       tail...) {}
+template <usize L, typename T> template          <typename A, typename... B> constexpr Vec<L, T>::Vec(       A         head, B... tail) noexcept : head_(head       ), tail_(             tail...) {}
+template <usize L, typename T> template          <typename A, typename... B> constexpr Vec<L, T>::Vec(Vec<1, A> const& head, B... tail) noexcept : head_(head.head()), tail_(             tail...) {}
+template <usize L, typename T> template <usize M, typename A, typename... B> constexpr Vec<L, T>::Vec(Vec<M, A> const& head, B... tail) noexcept : head_(head.head()), tail_(head.tail(), tail...) {}
 
 // --- Unary arithmetic operators ---
 template <usize L, typename T> template <typename U> constexpr Vec<L, T>& Vec<L, T>::operator=(Vec<L, U> const& vec) { this->head_ = static_cast<T>(vec.head()); this->tail_ = vec.tail(); return *this; }
