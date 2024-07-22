@@ -55,11 +55,46 @@ if (BUILD_TESTING)
       GTest::gtest_main
       ${PROJECT_NAME}::${PROJECT_NAME}
   )
-  
+  add_cc_test(
+    NAME
+      vecf_test
+    SRCS
+      ${TEST_DIR}/vec/func.cc
+    DEPS
+      GTest::gmock
+      GTest::gtest_main
+      ${PROJECT_NAME}::${PROJECT_NAME}
+  )
+
+  add_cc_test(
+    NAME
+      mat1x1_test
+    SRCS
+      ${TEST_DIR}/mat/mat1x1.cc
+    DEPS
+      GTest::gmock
+      GTest::gtest_main
+      ${PROJECT_NAME}::${PROJECT_NAME}
+  )
+  add_cc_test(
+    NAME
+      mat1xr_test
+    SRCS
+      ${TEST_DIR}/mat/mat1xr.cc
+    DEPS
+      GTest::gmock
+      GTest::gtest_main
+      ${PROJECT_NAME}::${PROJECT_NAME}
+  )
+
   include(GoogleTest)
   gtest_discover_tests(vec1_test)
   gtest_discover_tests(vec2_test)
   gtest_discover_tests(vec3_test)
   gtest_discover_tests(vec4_test)
   gtest_discover_tests(vecn_test)
+  gtest_discover_tests(vecf_test)
+
+  gtest_discover_tests(mat1x1_test)
+  gtest_discover_tests(mat1xr_test)
 endif()

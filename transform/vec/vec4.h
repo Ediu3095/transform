@@ -4,9 +4,6 @@
 #include <cassert>
 
 #include "transform/types.h"
-#include "transform/vec/vec.h"
-#include "transform/vec/vec1.h"
-#include "transform/vec/vec2.h"
 #include "transform/vec/vec3.h"
 
 #define L 4
