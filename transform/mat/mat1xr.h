@@ -5,6 +5,7 @@
 
 #include "transform/types.h"
 #include "transform/mat/mat1x1.h"
+#include "transform/vec/func.h"
 #include "transform/vec/vecn.h"
 
 #define C 1
@@ -27,20 +28,20 @@ template <usize R, typename T> class Mat<C, R, T> {
 
  public:
   // --- Component access ---
-  static constexpr LengthType Length() noexcept { return 1; }
+  static constexpr LengthType Length() noexcept { return C; }
 
   constexpr Vec<R, T> &      operator[](LengthType idx)       noexcept;
   constexpr Vec<R, T> const& operator[](LengthType idx) const noexcept;
 
-  constexpr Vec<R, T> const& head () const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr Vec<C, T>        headr() const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr Vec<R, T> const& head() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr Mat<1, R - 1, T>        tailr() const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_head(Vec<R, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_head (Vec<R, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
-  constexpr void set_headr(Vec<C, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr Vec<C,        T> headr() const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr Mat<C, R - 1, T> tailr() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_tailr(Mat<1, R - 1, T> const& tail) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_headr(Vec<C,        T> const& head) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_tailr(Mat<C, R - 1, T> const& tail) noexcept;  // NOLINT(*-identifier-naming)
 
   // --- Implicit basic constructors ---
   constexpr Mat() noexcept;
@@ -60,12 +61,12 @@ template <usize R, typename T> class Mat<C, R, T> {
   template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head, Mat<1, M, V> const& tail1, W... tail2) noexcept;
   template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head, Mat<N, M, V> const& tail1, W... tail2) noexcept;
 
-  template                   <typename U, typename... V>                   explicit constexpr Mat(          U         head, V... tail) noexcept;
-  template          <usize M, typename U, typename... V> requires (M >= R) explicit constexpr Mat(   Vec<M, U> const& head, V... tail) noexcept;
-  template <usize N, usize M, typename U, typename... V>                   explicit constexpr Mat(Mat<1, M, U> const& head, V... tail) noexcept;
-  template <usize N, usize M, typename U, typename... V>                   explicit constexpr Mat(Mat<N, M, U> const& head, V... tail) noexcept;
+  template                   <typename U, typename... V>                  explicit constexpr Mat(          U         head, V... tail) noexcept;
+  template          <usize M, typename U, typename... V> requires (M > R) explicit constexpr Mat(   Vec<M, U> const& head, V... tail) noexcept;
+  template <usize N, usize M, typename U, typename... V>                  explicit constexpr Mat(Mat<1, M, U> const& head, V... tail) noexcept;
+  template <usize N, usize M, typename U, typename... V>                  explicit constexpr Mat(Mat<N, M, U> const& head, V... tail) noexcept;
 
-  template <usize N, usize M, typename A> explicit constexpr Mat(Mat<N, M, A> const& mat) noexcept;
+  // template <usize N, usize M, typename A> explicit constexpr Mat(Mat<N, M, A> const& mat) noexcept;
 
   // --- Destructor ---
   inline ~Mat() noexcept = default;
@@ -73,7 +74,7 @@ template <usize R, typename T> class Mat<C, R, T> {
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
   constexpr Mat<C, R, T>& operator=(Mat&& vec) noexcept = default;
-  template <typename U> constexpr Mat<C, R, T>& operator=(Mat<1, 1, U> const& mat);
+  template <typename U> constexpr Mat<C, R, T>& operator=(Mat<C, R, U> const& mat);
 
   template <typename U> constexpr Mat<C, R, T>& operator+=(U sca);
   template <typename U> constexpr Mat<C, R, T>& operator-=(U sca);
@@ -105,9 +106,10 @@ template <usize R, typename T> constexpr Mat<C, R, T> operator*(T sca1, Mat<C, R
 
 template <usize R, typename T> constexpr Mat<C, R, T> operator+(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2);
 template <usize R, typename T> constexpr Mat<C, R, T> operator-(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2);
-template <usize R, typename T> constexpr Mat<C, R, T> operator*(Mat<C, R, T> const& mat1, Mat<C, C, T> const& mat2);
-template <usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2);
-template <usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2);
+
+template <usize N, usize R, typename T> constexpr Mat<C, N, T> operator*(Mat<R, N, T> const& mat1, Mat<C, R, T> const& mat2);
+template          <usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2);
+template          <usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2);
 
 // --- Boolean operators ---
 template <usize R, typename T> constexpr bool operator==(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2);
@@ -117,19 +119,21 @@ template <usize R, typename T> constexpr bool operator!=(Mat<C, R, T> const& mat
  * Function definitions *
  ************************/
 
+// --- Component access ---
 template <usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return this->head_; }
 template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return this->head_; }
 
-template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::head () const noexcept { return this->head_; }                    // NOLINT(*-identifier-naming)
-template <usize R, typename T> constexpr Vec<C, T>        Mat<C, R, T>::headr() const noexcept { return Vec<C, T>(this->head_.head()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)
 
-template <usize R, typename T> constexpr Mat<1, R - 1, T>        Mat<C, R, T>::tailr() const noexcept { return Mat<1, R - 1, T>(this->head_.tail()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr void Mat<C, R, T>::set_head(Vec<R, T> const& head) noexcept { this->head_ = head; }  // NOLINT(*-identifier-naming)
 
-template <usize R, typename T> constexpr void Mat<C, R, T>::set_head (Vec<R, T> const& head) noexcept { this->head_ = head; }                 // NOLINT(*-identifier-naming)
-template <usize R, typename T> constexpr void Mat<C, R, T>::set_headr(Vec<C, T> const& head) noexcept { this->head_.set_head(head.head()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr Vec<C,        T> Mat<C, R, T>::headr() const noexcept { return Vec<C,        T>(this->head_.head()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr Mat<C, R - 1, T> Mat<C, R, T>::tailr() const noexcept { return Mat<C, R - 1, T>(this->head_.tail()); }  // NOLINT(*-identifier-naming)
 
-template <usize R, typename T> constexpr void Mat<C, R, T>::set_tailr(Mat<1, R - 1, T> const& tail) noexcept { this->head_.set_tail(tail.head()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr void Mat<C, R, T>::set_headr(Vec<C,        T> const& head) noexcept { this->head_.set_head(head.head()); }  // NOLINT(*-identifier-naming)
+template <usize R, typename T> constexpr void Mat<C, R, T>::set_tailr(Mat<C, R - 1, T> const& tail) noexcept { this->head_.set_tail(tail.head()); }  // NOLINT(*-identifier-naming)
 
+// --- Implicit basic constructors ---
 template <usize R, typename T> constexpr Mat<C, R, T>::Mat() noexcept : head_() {}
 template <usize R, typename T> constexpr Mat<C, R, T>::Mat(Mat const& mat) : head_(mat.head_) {}
 
@@ -146,15 +150,15 @@ template <usize R, typename T> template          <usize M, usize L, typename U, 
 template <usize R, typename T> template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) constexpr Mat<C, R, T>::Mat(Vec<L, U> const& head, Mat<1, M, V> const& tail1, W... tail2) noexcept : Mat(Vec<L + 1, U>(head),                tail1.head()  ,               tail2...) {}
 template <usize R, typename T> template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) constexpr Mat<C, R, T>::Mat(Vec<L, U> const& head, Mat<N, M, V> const& tail1, W... tail2) noexcept : Mat(Vec<L + 1, U>(head),                tail1.head()  , tail1.tail(), tail2...) {}
 
-template <usize R, typename T> template                   <typename U, typename... V>                   constexpr Mat<C, R, T>::Mat(          U         head, V... tail) noexcept : Mat(Vec<1, U>(head       ),              tail...) {}
-template <usize R, typename T> template          <usize M, typename U, typename... V> requires (M >= R) constexpr Mat<C, R, T>::Mat(   Vec<M, U> const& head, V... tail) noexcept : Mat(Vec<1, U>(head.head()), head.tail(), tail...) {}
-template <usize R, typename T> template <usize N, usize M, typename U, typename... V>                   constexpr Mat<C, R, T>::Mat(Mat<1, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
-template <usize R, typename T> template <usize N, usize M, typename U, typename... V>                   constexpr Mat<C, R, T>::Mat(Mat<N, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
+template <usize R, typename T> template                   <typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(          U         head, V... tail) noexcept : Mat(Vec<1, U>(head       ),              tail...) {}
+template <usize R, typename T> template          <usize M, typename U, typename... V> requires (M > R) constexpr Mat<C, R, T>::Mat(   Vec<M, U> const& head, V... tail) noexcept : Mat(Vec<1, U>(head.head()), head.tail(), tail...) {}
+template <usize R, typename T> template <usize N, usize M, typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(Mat<1, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
+template <usize R, typename T> template <usize N, usize M, typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(Mat<N, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
 
 // template <usize R, typename T> template <usize N, usize M, typename A> constexpr Mat<C, R, T>::Mat(Mat<N, M, A> const& mat) noexcept : head_(mat.head()) {}
 
 // --- Unary operators ---
-template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator=(Mat<1, 1, U> const& mat) { this->head_ = mat.head(); return *this; };
+template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator=(Mat<C, R, U> const& mat) { this->head_ = mat.head(); return *this; };
 
 template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator+=(U sca) { this->head_ += sca; return *this; }
 template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator-=(U sca) { this->head_ -= sca; return *this; }
@@ -162,7 +166,7 @@ template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat
 
 template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator+=(Mat<C, R, U> const& mat) { this->head_ += mat.head(); return *this; }
 template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator-=(Mat<C, R, U> const& mat) { this->head_ -= mat.head(); return *this; }
-template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator*=(Mat<C, C, U> const& mat) { this->head_ *= mat.head(); return *this; }
+template <usize R, typename T> template <typename U> constexpr Mat<C, R, T>& Mat<C, R, T>::operator*=(Mat<C, C, U> const& mat) { return *this = *this * mat; }
 
 template <usize R, typename T> constexpr Mat<C, R, T>& Mat<C, R, T>::operator++() { ++this->head_; return *this; }
 template <usize R, typename T> constexpr Mat<C, R, T>& Mat<C, R, T>::operator--() { --this->head_; return *this; }
@@ -185,9 +189,10 @@ template <usize R, typename T> constexpr Mat<C, R, T> operator*(T sca1, Mat<C, R
 
 template <usize R, typename T> constexpr Mat<C, R, T> operator+(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2) { return Mat<C, R, T>(mat1.head() + mat2.head()); }
 template <usize R, typename T> constexpr Mat<C, R, T> operator-(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2) { return Mat<C, R, T>(mat1.head() - mat2.head()); }
-template <usize R, typename T> constexpr Mat<C, R, T> operator*(Mat<C, R, T> const& mat1, Mat<C, C, T> const& mat2) { return Mat<C, R, T>(mat1.head() * mat2.head()); }
-template <usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2) { return Vec<   R, T>(Dot(mat1.headr(), vec2), mat1.tailr() * vec2); }
-template <usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2) { return Vec<C,    T>(Dot(vec1, mat2.head())); }
+
+template <usize N, usize R, typename T> constexpr Mat<C, N, T> operator*(Mat<R, N, T> const& mat1, Mat<C, R, T> const& mat2) { return Mat<C, N, T>(   (mat1 * mat2.head())                     ); }
+template          <usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2) { return Vec<   R, T>(Dot(mat1.headr(), vec2), mat1.tailr() * vec2); }
+template          <usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2) { return Vec<C,    T>(Dot(vec1,  mat2.head())                     ); }
 
 // --- Boolean operators ---
 template <usize R, typename T> constexpr bool operator==(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2) { return mat1.head() == mat2.head(); }

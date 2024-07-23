@@ -40,12 +40,12 @@ TEST(MatTest, Mat1x1) {
   EXPECT_EQ(kMat3 * 2, kMat6);
   EXPECT_EQ(kMat6 - 2, kMat4);
 
+  EXPECT_EQ(kMat1 + kMat2, kMat3);
+  EXPECT_EQ(kMat6 - kMat2, kMat4);
+
+  EXPECT_EQ(kMat3 * kMat2, kMat6);
   EXPECT_EQ(kMat2 * kVec2, kVec4);
   EXPECT_EQ(kVec2 * kMat2, kVec4);
-
-  EXPECT_EQ(kMat1 + kMat2, kMat3);
-  EXPECT_EQ(kMat3 * kMat2, kMat6);
-  EXPECT_EQ(kMat6 - kMat2, kMat4);
 }
 
 }  // namespace tf::test
