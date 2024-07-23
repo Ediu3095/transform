@@ -25,7 +25,7 @@ template <typename T> class Vec<L, T> {
   // --- Component access ---
   static constexpr LengthType Length() noexcept { return L; }
 
-  constexpr T& operator[](LengthType idx) noexcept;
+  constexpr T &      operator[](LengthType idx)       noexcept;
   constexpr T const& operator[](LengthType idx) const noexcept;
 
   constexpr T const& head() const noexcept;              // NOLINT(*-identifier-naming)
@@ -218,7 +218,7 @@ template <typename T> using Vec4 = Vec<L, T>;
  ************************/
 
 // --- Component access ---
-template <typename T> constexpr T&       Vec<L, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <typename T> constexpr T &      Vec<L, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
 template <typename T> constexpr T const& Vec<L, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
 
 template <typename T> constexpr            T  const& Vec<L, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)

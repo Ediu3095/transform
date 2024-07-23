@@ -30,8 +30,8 @@ template <usize R, typename T> class Mat<C, R, T> {
   // --- Component access ---
   static constexpr LengthType Length() noexcept { return C; }
 
-  constexpr Vec<R, T> &      operator[](LengthType idx)       noexcept;
-  constexpr Vec<R, T> const& operator[](LengthType idx) const noexcept;
+  constexpr Vec<R, T> &      operator[]([[maybe_unused]] LengthType idx)       noexcept;
+  constexpr Vec<R, T> const& operator[]([[maybe_unused]] LengthType idx) const noexcept;
 
   constexpr Vec<R, T> const& head() const noexcept;  // NOLINT(*-identifier-naming)
 
@@ -120,8 +120,8 @@ template <usize R, typename T> constexpr bool operator!=(Mat<C, R, T> const& mat
  ************************/
 
 // --- Component access ---
-template <usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return this->head_; }
-template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return this->head_; }
+template <usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[]([[maybe_unused]] LengthType idx)       noexcept { assert(idx < this->Length()); return this->head_; }
+template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[]([[maybe_unused]] LengthType idx) const noexcept { assert(idx < this->Length()); return this->head_; }
 
 template <usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)
 

@@ -126,8 +126,8 @@ template <typename T> using Mat4 = Mat<4, 4, T>;
  ************************/
 
 // --- Component access ---
-template <usize C, usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return this->head_; }
-template <usize C, usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return this->head_; }
+template <usize C, usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <usize C, usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
 
 template <usize C, usize R, typename T> constexpr Vec<       R, T> const& Mat<C, R, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)
 template <usize C, usize R, typename T> constexpr Mat<C - 1, R, T> const& Mat<C, R, T>::tail() const noexcept { return this->tail_; }  // NOLINT(*-identifier-naming)
