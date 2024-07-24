@@ -59,12 +59,12 @@ template <usize C, typename T> class Mat<C, R, T> {
   // template                   <usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head,           V         tail1, W... tail2) noexcept;
   // template                   <usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head,    Vec<1, V> const& tail1, W... tail2) noexcept;
   // template          <usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head,    Vec<M, V> const& tail1, W... tail2) noexcept;
-  // template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head, Mat<1, M, V> const& tail1, W... tail2) noexcept;
+  // template          <usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head, Mat<1, M, V> const& tail1, W... tail2) noexcept;
   // template <usize N, usize M, usize L, typename U, typename V, typename... W> requires (L < R) explicit constexpr Mat(Vec<L, U> const& head, Mat<N, M, V> const& tail1, W... tail2) noexcept;
 
   template                   <typename U, typename... V>                  explicit constexpr Mat(          U         head, V... tail) noexcept;
   template          <usize M, typename U, typename... V> requires (M > R) explicit constexpr Mat(   Vec<M, U> const& head, V... tail) noexcept;
-  template <usize N, usize M, typename U, typename... V>                  explicit constexpr Mat(Mat<1, M, U> const& head, V... tail) noexcept;
+  template          <usize M, typename U, typename... V>                  explicit constexpr Mat(Mat<1, M, U> const& head, V... tail) noexcept;
   template <usize N, usize M, typename U, typename... V>                  explicit constexpr Mat(Mat<N, M, U> const& head, V... tail) noexcept;
 
   // template <usize N, usize M, typename A> explicit constexpr Mat(Mat<N, M, A> const& mat) noexcept;
@@ -153,7 +153,7 @@ template <usize C, typename T> template <typename U, typename... V> constexpr Ma
 
 template <usize C, typename T> template                   <typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(          U         head, V... tail) noexcept : Mat(Vec<1, U>(head       ),              tail...) {}
 template <usize C, typename T> template          <usize M, typename U, typename... V> requires (M > R) constexpr Mat<C, R, T>::Mat(   Vec<M, U> const& head, V... tail) noexcept : Mat(Vec<1, U>(head.head()), head.tail(), tail...) {}
-template <usize C, typename T> template <usize N, usize M, typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(Mat<1, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
+template <usize C, typename T> template          <usize M, typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(Mat<1, M, U> const& head, V... tail) noexcept : Mat(          head.head() ,              tail...) {}
 template <usize C, typename T> template <usize N, usize M, typename U, typename... V>                  constexpr Mat<C, R, T>::Mat(Mat<N, M, U> const& head, V... tail) noexcept : Mat(          head.head() , head.tail(), tail...) {}
 
 // template <usize C, typename T> template <usize N, usize M, typename A> constexpr Mat<C, R, T>::Mat(Mat<N, M, A> const& mat) noexcept : head_(mat.head()) {}

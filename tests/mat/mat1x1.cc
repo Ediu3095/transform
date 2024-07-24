@@ -19,7 +19,16 @@ TEST(MatTest, Mat1x1) {
   Mat1<i32> matn{};
 
   matn.set_head(kMat1.head());
-  EXPECT_EQ(matn[0][0], 1);
+  EXPECT_EQ(matn.head(), kMat1.head());
+
+  // matn.set_tail(kMat2.tail());
+  // EXPECT_EQ(matn.tail(), kMat2.tail());
+
+  matn.set_headr(kMat3.headr());
+  EXPECT_EQ(matn.headr(), kMat3.headr());
+
+  // matn.set_tailr(kMat4.tailr());
+  // EXPECT_EQ(matn.tailr(), kMat4.tailr());
 
   EXPECT_FLOAT_EQ(Mat1<f32>(kMat1)[0][0], 1.0F);
 
