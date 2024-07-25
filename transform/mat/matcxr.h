@@ -72,6 +72,9 @@ template <usize C, usize R, typename T> class Mat {
   // --- Destructor ---
   inline ~Mat() noexcept = default;
 
+  // --- Factory ---
+  static constexpr Mat<C, R, T> Identity() noexcept { static_assert(C == R); Mat<C, R, T> result{}; for (usize i = 0; i < C; ++i) result[i][i] = static_cast<T>(1); return result; }
+
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
   constexpr Mat<C, R, T>& operator=(Mat&& vec) noexcept = default;

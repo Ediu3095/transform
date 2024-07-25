@@ -59,6 +59,9 @@ template <typename T> class Mat<C, R, T> {
   // --- Destructor ---
   inline ~Mat() noexcept = default;
 
+  // --- Factory ---
+  static constexpr Mat<C, R, T> Identity() noexcept { return Mat<C, R, T>(1); }
+
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
   constexpr Mat<C, R, T>& operator=(Mat&& vec) noexcept = default;

@@ -5,16 +5,12 @@
 
 #include "transform/types.h"
 #include "transform/vec/vec.h"
-#include "transform/vec/vec1.h"
-#include "transform/vec/vec2.h"
 #include "transform/vec/vec3.h"
-#include "transform/vec/vec4.h"
-#include "transform/vec/vecn.h"
 
 namespace tf {
 
 template <usize L, typename T> constexpr        T  Length   (Vec<L, T> const& vec);
-template <usize L, typename T> constexpr Vec<3, T> Normalize(Vec<L, T> const& vec);
+template <usize L, typename T> constexpr Vec<L, T> Normalize(Vec<L, T> const& vec);
 template <usize L, typename T> constexpr        T  Sum      (Vec<L, T> const& vec);
 
 template          <typename T> constexpr Vec<3, T> Cross   (Vec<3, T> const& vec1, Vec<3, T> const& vec2);
@@ -26,7 +22,7 @@ template <usize L, typename T> constexpr        T  Distance(Vec<L, T> const& vec
  ************************/
 
 template <usize L, typename T> constexpr        T  Length   (Vec<L, T> const& vec) { return std::sqrt(Dot(vec, vec)); }
-template <usize L, typename T> constexpr Vec<3, T> Normalize(Vec<L, T> const& vec) { return vec / Length(vec); }
+template <usize L, typename T> constexpr Vec<L, T> Normalize(Vec<L, T> const& vec) { return vec / Length(vec); }
 template          <typename T> constexpr        T  Sum      (Vec<1, T> const& vec) { return vec.head(); }
 template <usize L, typename T> constexpr        T  Sum      (Vec<L, T> const& vec) { return vec.head() + Sum(vec.tail()); }
 

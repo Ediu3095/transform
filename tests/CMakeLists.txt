@@ -106,6 +106,16 @@ if (BUILD_TESTING)
       GTest::gtest_main
       ${PROJECT_NAME}::${PROJECT_NAME}
   )
+  add_cc_test(
+    NAME
+      matf_test
+    SRCS
+      ${TEST_DIR}/mat/func.cc
+    DEPS
+      GTest::gmock
+      GTest::gtest_main
+      ${PROJECT_NAME}::${PROJECT_NAME}
+  )
 
   include(GoogleTest)
   gtest_discover_tests(vec1_test)
@@ -119,4 +129,5 @@ if (BUILD_TESTING)
   gtest_discover_tests(mat1xr_test)
   gtest_discover_tests(matcx1_test)
   gtest_discover_tests(matcxr_test)
+  gtest_discover_tests(matf_test)
 endif()
