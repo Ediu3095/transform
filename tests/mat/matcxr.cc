@@ -7,12 +7,15 @@ namespace tf::test {
 
 TEST(MatTest, MatCxR) {
   // Mat1<i32> constexpr kMat0{ };
-  Mat3  <i32> constexpr kMat1( 1,  0,  0,  0,  1,  0,  0,  0,  1);
-  Mat3  <i32> constexpr kMat2( 2,  0,  0,  0,  2,  0,  0,  0,  2);
-  Mat3  <i32> constexpr kMat3( 1,  2,  3,  4,  5,  6,  7,  8,  9);
-  Mat3  <i32> constexpr kMat4( 2,  4,  6,  8, 10, 12, 14, 16, 18);
+  Mat3<i32> constexpr kMat1 = Mat3<i32>::Identity();
+  Mat3<i32> constexpr kMat2( 2,  0,  0,  0,  2,  0,  0,  0,  2);
+  Mat3<i32> constexpr kMat3( 1,  2,  3,  4,  5,  6,  7,  8,  9);
+  Mat3<i32> constexpr kMat4( 2,  4,  6,  8, 10, 12, 14, 16, 18);
 
   Vec3<i32> constexpr kVecA(1, 0, 0);
+
+  Mat4<i32> constexpr kMatA = Mat4<i32>::Embed(kMat1);
+  Mat4<i32> constexpr kMatB(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
 
   Mat3<i32> matn{};
 
@@ -29,6 +32,10 @@ TEST(MatTest, MatCxR) {
   EXPECT_EQ(matn.tailr(), kMat4.tailr());
 
   EXPECT_FLOAT_EQ(Mat3<f32>(kMat1)[1][1], 1.0F);
+
+  EXPECT_EQ(kMatA, kMatB);
+  EXPECT_EQ(Mat2<i32>::Embed(kMatA), Mat2<i32>::Embed(kMat1));
+  EXPECT_EQ(Mat1<i32>::Embed(kMatA), Mat1<i32>::Embed(kMat1));
 
   EXPECT_EQ(matn = kMat1, kMat1);
   EXPECT_EQ(matn += 2, kMat1 + 2);

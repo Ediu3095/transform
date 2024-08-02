@@ -72,6 +72,10 @@ template <usize C, typename T> class Mat<C, R, T> {
   // --- Destructor ---
   inline ~Mat() noexcept = default;
 
+  // --- Factory ---
+  template <usize N, usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<N, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>::Embed(mat.tail())); }
+  template          <usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<1, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>()); }
+
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
   constexpr Mat<C, R, T>& operator=(Mat&& vec) noexcept = default;

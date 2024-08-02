@@ -34,9 +34,9 @@ template <typename T> class Mat<C, R, T> {
   constexpr Vec<R, T> &      operator[]([[maybe_unused]] LengthType idx)       noexcept;
   constexpr Vec<R, T> const& operator[]([[maybe_unused]] LengthType idx) const noexcept;
 
-  constexpr Vec<R, T> const& head () const noexcept;  // NOLINT(*-identifier-naming)
+  constexpr Vec<R, T> const& head() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr void set_head (Vec<R, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
+  constexpr void set_head(Vec<R, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
 
   constexpr Vec<C, T> headr() const noexcept;  // NOLINT(*-identifier-naming)
 
@@ -61,6 +61,7 @@ template <typename T> class Mat<C, R, T> {
 
   // --- Factory ---
   static constexpr Mat<C, R, T> Identity() noexcept { return Mat<C, R, T>(1); }
+  template <usize N, usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<N, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head())); }
 
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;

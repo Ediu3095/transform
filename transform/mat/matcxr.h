@@ -74,6 +74,8 @@ template <usize C, usize R, typename T> class Mat {
 
   // --- Factory ---
   static constexpr Mat<C, R, T> Identity() noexcept { static_assert(C == R); Mat<C, R, T> result{}; for (usize i = 0; i < C; ++i) result[i][i] = static_cast<T>(1); return result; }
+  template <usize N, usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<N, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>::Embed(mat.tail())); }
+  template          <usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<1, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>()); }
 
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
