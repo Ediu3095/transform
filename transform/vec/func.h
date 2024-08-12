@@ -21,7 +21,7 @@ template <usize L, typename T> constexpr        T  Distance(Vec<L, T> const& vec
  * Function definitions *
  ************************/
 
-template <usize L, typename T> constexpr        T  Length   (Vec<L, T> const& vec) { return std::sqrt(Dot(vec, vec)); }
+template <usize L, typename T> constexpr        T  Length   (Vec<L, T> const& vec) { return static_cast<T>(std::sqrt(Dot(vec, vec))); }
 template <usize L, typename T> constexpr Vec<L, T> Normalize(Vec<L, T> const& vec) { return vec / Length(vec); }
 template          <typename T> constexpr        T  Sum      (Vec<1, T> const& vec) { return vec.head(); }
 template <usize L, typename T> constexpr        T  Sum      (Vec<L, T> const& vec) { return vec.head() + Sum(vec.tail()); }

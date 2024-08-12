@@ -50,7 +50,7 @@ template <usize C, usize R, typename T> constexpr Mat<C - 1, R - 1, T> CutDown(M
 
 template <usize R, typename T> constexpr T Minor(Mat<R, R, T> const& mat, usize col, usize row) { return Determinant(CutDown(mat, col, row)); }
 
-template <usize R, typename T> constexpr T Cofactor(Mat<R, R, T> const& mat, usize col, usize row) { return std::pow(-1, col + row) * Minor(mat, col, row); }
+template <usize R, typename T> constexpr T Cofactor(Mat<R, R, T> const& mat, usize col, usize row) { return static_cast<T>(std::pow(-1, col + row)) * Minor(mat, col, row); }
 
 template <usize R, typename T> constexpr T Determinant(Mat<R, R, T> const& mat) { T result{}; for (usize col = 0; col < R; ++col) result = mat[col][0] * Cofactor(mat, col, 0) + result; return result; }
 template          <typename T> constexpr T Determinant(Mat<1, 1, T> const& mat) { return mat[0][0]; }

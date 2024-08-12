@@ -40,15 +40,23 @@ function(add_cc_test)
       ${PROJECT_SOURCE_DIR}
   )
 
-  target_compile_options(
-    ${ADD_CC_TEST_NAME}
-    PRIVATE
-      -Wall
-      -Wextra
-      -Wpedantic
-      -Werror
-  )
-
+  if (MSVC)
+    target_compile_options(
+      ${ADD_CC_TEST_NAME}
+      PRIVATE
+        /W4
+        /WX
+    )
+  else()
+    target_compile_options(
+      ${ADD_CC_TEST_NAME}
+      PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+        -Werror
+    )
+  endif()
   target_link_libraries(
     ${ADD_CC_TEST_NAME}
     PRIVATE
