@@ -6,8 +6,10 @@
 #include "transform/mat/func.h"
 #include "transform/mat/matcxr.h"
 #include "transform/transform/basic.h"
+#include "transform/vec/common.h"
 #include "transform/vec/geometric.h"
-#include "transform/vec/vec3.h"
+#include "transform/vec/trigonometric.h"
+#include "transform/vec/vecn.h"
 
 namespace tf {
 
@@ -38,15 +40,15 @@ template <typename T> constexpr Mat<4, 4, T> euler(Vec<3, T> const& vec) {
 
 // 4.2.2 Extracting Parameters from the Euler Transform
 template <typename T> constexpr Vec<3, T> extractFromEuler(Mat<4, 4, T> const& mat) {
-  T pitch = std::asin(mat[1][2]);
-  T yaw   = std::cos(pitch) != 0 ? std::atan2(-mat[0][2], mat[2][2]) : 0;
-  T roll  = std::cos(pitch) != 0 ? std::atan2(-mat[1][0], mat[1][1]) : std::atan2(mat[0][1], mat[0][0]);
+  T pitch = asin(mat[1][2]);
+  T yaw   = cos(pitch) != 0 ? atan2(-mat[0][2], mat[2][2]) : 0;
+  T roll  = cos(pitch) != 0 ? atan2(-mat[1][0], mat[1][1]) : atan2(mat[0][1], mat[0][0]);
   return Vec<3, T>(yaw, pitch, roll);
 }
 
 // 4.2.4 Rotation about an Arbitrary Axis
 template <typename T> constexpr Mat<4, 4, T> rotate(Vec<3, T> const& vec, T rad) {
-  Vec<3, T> tmp = Vec<3, T>(std::abs(vec.x()), std::abs(vec.y()), std::abs(vec.z()));
+  Vec<3, T> tmp = Vec<3, T>(abs(vec.x()), abs(vec.y()), abs(vec.z()));
   Vec<3, T> x_vec = normalize(vec);
   Vec<3, T> y_vec;
   if      (tmp.x() <= tmp.y() && tmp.x() <= tmp.z()) y_vec = normalize(Vec<3, T>(       0, -vec.z(), vec.y()));

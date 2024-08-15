@@ -5,6 +5,7 @@
 
 #include "transform/mat/matcxr.h"
 #include "transform/vec/geometric.h"
+#include "transform/vec/trigonometric.h"
 
 namespace tf {
 
@@ -59,9 +60,9 @@ template <typename T> constexpr Mat4<T> translate(T vecx, T vecy, T vecz) { retu
 template <typename T> constexpr Mat4<T> translate(Vec3<T> const& vec) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(vec, 1)); }
 
 // 4.1.2 Rotation
-template <typename T> constexpr Mat4<T> rotateX(T rad) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, std::cos(rad), std::sin(rad), 0), Vec4<T>(0, -std::sin(rad), std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> rotateY(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), 0, -std::sin(rad), 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(std::sin(rad), 0, std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> rotateZ(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), std::sin(rad), 0, 0), Vec4<T>(-std::sin(rad), std::cos(rad), 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateX(T rad) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, cos(rad), sin(rad), 0), Vec4<T>(0, -sin(rad), cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateY(T rad) { return Mat4<T>(Vec4<T>(cos(rad), 0, -sin(rad), 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(sin(rad), 0, cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateZ(T rad) { return Mat4<T>(Vec4<T>(cos(rad), sin(rad), 0, 0), Vec4<T>(-sin(rad), cos(rad), 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
 
 // 4.1.3 Scaling
 template <typename T> constexpr Mat4<T> scale(T sca) { return scale(sca, sca, sca); }

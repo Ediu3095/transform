@@ -5,8 +5,9 @@
 #include <cmath>
 
 #include "transform/types.h"
-#include "transform/mat/mat.h"
-#include "transform/vec/vec.h"
+#include "transform/mat/matcxr.h"
+#include "transform/vec/exponential.h"
+#include "transform/vec/vecn.h"
 
 namespace tf {
 
@@ -44,7 +45,7 @@ template <usize C, usize R, typename T> constexpr Mat<C - 1, R - 1, T> cutDown(M
 
 template <usize R, typename T> constexpr T minor(Mat<R, R, T> const& mat, usize col, usize row) { return determinant(cutDown(mat, col, row)); }
 
-template <usize R, typename T> constexpr T cofactor(Mat<R, R, T> const& mat, usize col, usize row) { return static_cast<T>(std::pow(-1, col + row)) * minor(mat, col, row); }
+template <usize R, typename T> constexpr T cofactor(Mat<R, R, T> const& mat, usize col, usize row) { return static_cast<T>(pow(-1, col + row)) * minor(mat, col, row); }
 
 template          <typename T> constexpr T determinant(Mat<1, 1, T> const& mat) { return mat[0][0]; }
 template <usize R, typename T> constexpr T determinant(Mat<R, R, T> const& mat) { T result{}; for (usize col = 0; col < R; ++col) result = mat[col][0] * cofactor(mat, col, 0) + result; return result; }

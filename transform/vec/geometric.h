@@ -4,8 +4,8 @@
 #include <cmath>
 
 #include "transform/types.h"
-#include "transform/vec/vec.h"
-#include "transform/vec/vec3.h"
+#include "transform/vec/exponential.h"
+#include "transform/vec/vecn.h"
 
 namespace tf {
 
@@ -28,7 +28,7 @@ template <usize L, typename T> constexpr Vec<L, T> normalize(Vec<L, T> const& ve
 template          <typename T> constexpr T sum(Vec<1, T> const& vec) { return vec.head(); }
 template <usize L, typename T> constexpr T sum(Vec<L, T> const& vec) { return vec.head() + sum(vec.tail()); }
 
-template <usize L, typename T> constexpr T length(Vec<L, T> const& vec) { return static_cast<T>(std::sqrt(dot(vec, vec))); }
+template <usize L, typename T> constexpr T length(Vec<L, T> const& vec) { return static_cast<T>(sqrt(dot(vec, vec))); }
 
 template <usize L, typename T> constexpr T distance(Vec<L, T> const& vec1, Vec<L, T> const& vec2) { return length(vec2 - vec1); }
 
