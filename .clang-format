@@ -1,6 +1,6 @@
 ---
 Language: Cpp
-BasedOnStyle: Google
+# BasedOnStyle: Google
 AccessModifierOffset: -1
 AlignArrayOfStructures: Left
 AlignConsecutiveAssignments:
@@ -19,7 +19,7 @@ AlignConsecutiveShortCaseStatements:
   AcrossComments: false
   AlignCaseColons: false
 BreakConstructorInitializers: BeforeComma
-BreakTemplateDeclarations: No
+# BreakTemplateDeclarations: No
 ColumnLimit: 160
 DerivePointerAlignment: false
 IncludeBlocks: Preserve

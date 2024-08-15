@@ -1,7 +1,7 @@
 #ifndef TRANSFORM_VEC_H_
 #define TRANSFORM_VEC_H_
 
-#include "transform/vec/func.h"
+#include "transform/vec/geometric.h"
 #include "transform/vec/vec.h"
 #include "transform/vec/vec1.h"
 #include "transform/vec/vec2.h"

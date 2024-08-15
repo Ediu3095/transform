@@ -57,9 +57,9 @@ if (BUILD_TESTING)
   )
   add_cc_test(
     NAME
-      vecf_test
+      vecg_test
     SRCS
-      ${TEST_DIR}/vec/func.cc
+      ${TEST_DIR}/vec/geometric.cc
     DEPS
       GTest::gmock
       GTest::gtest_main
@@ -118,12 +118,13 @@ if (BUILD_TESTING)
   )
 
   include(GoogleTest)
+
   gtest_discover_tests(vec1_test)
   gtest_discover_tests(vec2_test)
   gtest_discover_tests(vec3_test)
   gtest_discover_tests(vec4_test)
   gtest_discover_tests(vecn_test)
-  gtest_discover_tests(vecf_test)
+  gtest_discover_tests(vecg_test)
 
   gtest_discover_tests(mat1x1_test)
   gtest_discover_tests(mat1xr_test)

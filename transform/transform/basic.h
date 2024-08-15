@@ -4,39 +4,39 @@
 #include <cmath>
 
 #include "transform/mat/matcxr.h"
-#include "transform/vec/func.h"
+#include "transform/vec/geometric.h"
 
 namespace tf {
 
 // 4.1.1 Translation
-template <typename T> constexpr Mat4<T> Translate(T vecx, T vecy, T vecz);
-template <typename T> constexpr Mat4<T> Translate(Vec3<T> const& vec);
+template <typename T> constexpr Mat4<T> translate(T vecx, T vecy, T vecz);
+template <typename T> constexpr Mat4<T> translate(Vec3<T> const& vec);
 
 // 4.1.2 Rotation
-template <typename T> constexpr Mat4<T> RotateX(T rad);
-template <typename T> constexpr Mat4<T> RotateY(T rad);
-template <typename T> constexpr Mat4<T> RotateZ(T rad);
+template <typename T> constexpr Mat4<T> rotateX(T rad);
+template <typename T> constexpr Mat4<T> rotateY(T rad);
+template <typename T> constexpr Mat4<T> rotateZ(T rad);
 
 // 4.1.3 Scaling
-template <typename T> constexpr Mat4<T> Scale(T sca);
-template <typename T> constexpr Mat4<T> Scale(T vecx, T vecy, T vecz);
-template <typename T> constexpr Mat4<T> Scale(Vec3<T> const& vec);
-template <typename T> constexpr Mat4<T> ChangeBasis(Vec3<T> const& x_vec, Vec3<T> const& y_vec, Vec3<T> const& z_vec);
+template <typename T> constexpr Mat4<T> scale(T sca);
+template <typename T> constexpr Mat4<T> scale(T vecx, T vecy, T vecz);
+template <typename T> constexpr Mat4<T> scale(Vec3<T> const& vec);
+template <typename T> constexpr Mat4<T> changeBasis(Vec3<T> const& x_vec, Vec3<T> const& y_vec, Vec3<T> const& z_vec);
 
 // 4.1.4 Shearing
-template <typename T> constexpr Mat4<T> ShearXY(T sca);
-template <typename T> constexpr Mat4<T> ShearXZ(T sca);
-template <typename T> constexpr Mat4<T> ShearYX(T sca);
-template <typename T> constexpr Mat4<T> ShearYZ(T sca);
-template <typename T> constexpr Mat4<T> ShearZX(T sca);
-template <typename T> constexpr Mat4<T> ShearZY(T sca);
+template <typename T> constexpr Mat4<T> shearXY(T sca);
+template <typename T> constexpr Mat4<T> shearXZ(T sca);
+template <typename T> constexpr Mat4<T> shearYX(T sca);
+template <typename T> constexpr Mat4<T> shearYZ(T sca);
+template <typename T> constexpr Mat4<T> shearZX(T sca);
+template <typename T> constexpr Mat4<T> shearZY(T sca);
 
 // 4.1.5 Concatenation of Transforms
 // Usually we'll want to apply transforms in the following order: scaling (S), rotation (R) and translation (T).
 // Therefore, the composite matrix can be computed as C = TRS.
 
 // 4.1.6 The Rigid-Body Transform
-template <typename T> constexpr Mat4<T> LookAt(Vec3<T> const& camera_pos, Vec3<T> const& up_vec, Vec3<T> const& point_pos);
+template <typename T> constexpr Mat4<T> lookAt(Vec3<T> const& camera_pos, Vec3<T> const& up_vec, Vec3<T> const& point_pos);
 
 // 4.1.7 Normal Transform
 // The traditional answer to transform normal vectors is to use the transposed inverse of the transform. However, the
@@ -55,30 +55,30 @@ template <typename T> constexpr Mat4<T> LookAt(Vec3<T> const& camera_pos, Vec3<T
  ************************/
 
 // 4.1.1 Translation
-template <typename T> constexpr Mat4<T> Translate(T vecx, T vecy, T vecz) { return Translate(Vec3<T>(vecx, vecy, vecz)); }
-template <typename T> constexpr Mat4<T> Translate(Vec3<T> const& vec) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(vec, 1)); }
+template <typename T> constexpr Mat4<T> translate(T vecx, T vecy, T vecz) { return translate(Vec3<T>(vecx, vecy, vecz)); }
+template <typename T> constexpr Mat4<T> translate(Vec3<T> const& vec) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(vec, 1)); }
 
 // 4.1.2 Rotation
-template <typename T> constexpr Mat4<T> RotateX(T rad) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, std::cos(rad), std::sin(rad), 0), Vec4<T>(0, -std::sin(rad), std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> RotateY(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), 0, -std::sin(rad), 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(std::sin(rad), 0, std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> RotateZ(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), std::sin(rad), 0, 0), Vec4<T>(-std::sin(rad), std::cos(rad), 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateX(T rad) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, std::cos(rad), std::sin(rad), 0), Vec4<T>(0, -std::sin(rad), std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateY(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), 0, -std::sin(rad), 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(std::sin(rad), 0, std::cos(rad), 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> rotateZ(T rad) { return Mat4<T>(Vec4<T>(std::cos(rad), std::sin(rad), 0, 0), Vec4<T>(-std::sin(rad), std::cos(rad), 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
 
 // 4.1.3 Scaling
-template <typename T> constexpr Mat4<T> Scale(T sca) { return Scale(sca, sca, sca); }
-template <typename T> constexpr Mat4<T> Scale(T vecx, T vecy, T vecz) { return Scale(Vec3<T>(vecx, vecy, vecz)); }
-template <typename T> constexpr Mat4<T> Scale(Vec3<T> const& vec) { return Mat4<T>(Vec4<T>(vec.x(), 0, 0, 0), Vec4<T>(0, vec.y(), 0, 0), Vec4<T>(0, 0, vec.z(), 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ChangeBasis(Vec3<T> const& x_vec, Vec3<T> const& y_vec, Vec3<T> const& z_vec) { return Mat4<T>(Vec4<T>(x_vec, 0), Vec4<T>(y_vec, 0), Vec4<T>(z_vec, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> scale(T sca) { return scale(sca, sca, sca); }
+template <typename T> constexpr Mat4<T> scale(T vecx, T vecy, T vecz) { return scale(Vec3<T>(vecx, vecy, vecz)); }
+template <typename T> constexpr Mat4<T> scale(Vec3<T> const& vec) { return Mat4<T>(Vec4<T>(vec.x(), 0, 0, 0), Vec4<T>(0, vec.y(), 0, 0), Vec4<T>(0, 0, vec.z(), 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> changeBasis(Vec3<T> const& x_vec, Vec3<T> const& y_vec, Vec3<T> const& z_vec) { return Mat4<T>(Vec4<T>(x_vec, 0), Vec4<T>(y_vec, 0), Vec4<T>(z_vec, 0), Vec4<T>(0, 0, 0, 1)); }
 
 // 4.1.4 Shearing
-template <typename T> constexpr Mat4<T> ShearXY(T sca) { return Mat4<T>(Vec4<T>(1, sca, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ShearXZ(T sca) { return Mat4<T>(Vec4<T>(1, 0, sca, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ShearYX(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(sca, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ShearYZ(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, sca, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ShearZX(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(sca, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
-template <typename T> constexpr Mat4<T> ShearZY(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, sca, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearXY(T sca) { return Mat4<T>(Vec4<T>(1, sca, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearXZ(T sca) { return Mat4<T>(Vec4<T>(1, 0, sca, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearYX(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(sca, 1, 0, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearYZ(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, sca, 0), Vec4<T>(0, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearZX(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(sca, 0, 1, 0), Vec4<T>(0, 0, 0, 1)); }
+template <typename T> constexpr Mat4<T> shearZY(T sca) { return Mat4<T>(Vec4<T>(1, 0, 0, 0), Vec4<T>(0, 1, 0, 0), Vec4<T>(0, sca, 1, 0), Vec4<T>(0, 0, 0, 1)); }
 
 // 4.1.6 The Rigid-Body Transform
-template <typename T> constexpr Mat4<T> LookAt(Vec3<T> const& camera_pos, Vec3<T> const& up_vec, Vec3<T> const& point_pos) { Vec3<T> z_vec = Normalize(camera_pos - point_pos); Vec3<T> x_vec = Normalize(-Cross(z_vec, up_vec)); Vec3<T> y_vec = Cross(z_vec, x_vec); return ChangeBasis(x_vec, y_vec, z_vec) * Translate(-camera_pos); }
+template <typename T> constexpr Mat4<T> lookAt(Vec3<T> const& camera_pos, Vec3<T> const& up_vec, Vec3<T> const& point_pos) { Vec3<T> z_vec = normalize(camera_pos - point_pos); Vec3<T> x_vec = normalize(-cross(z_vec, up_vec)); Vec3<T> y_vec = cross(z_vec, x_vec); return changeBasis(x_vec, y_vec, z_vec) * translate(-camera_pos); }
 
 }  // namespace tf
 

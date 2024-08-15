@@ -23,25 +23,25 @@ template <typename T> class Vec<L, T> {
   using LengthType = usize;
 
   // --- Component access ---
-  static constexpr LengthType Length() noexcept { return L; }
+  static constexpr LengthType length() noexcept { return L; }
 
   constexpr T &      operator[](LengthType idx)       noexcept;
   constexpr T const& operator[](LengthType idx) const noexcept;
 
-  constexpr T const& head() const noexcept;              // NOLINT(*-identifier-naming)
-  constexpr Vec<L - 1, T> const& tail() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& head() const noexcept;              // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr Vec<L - 1, T> const& tail() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr T const& x() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& r() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& s() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& x() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& r() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& s() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr T const& y() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& g() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& t() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& y() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& g() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& t() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr T const& z() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& b() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& p() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& z() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& b() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& p() const noexcept;  // NOLINT(*-identifier-naming)
 
   constexpr void set_head(T head) noexcept;                     // NOLINT(*-identifier-naming)
   constexpr void set_tail(Vec<L - 1, T> const& tail) noexcept;  // NOLINT(*-identifier-naming)
@@ -75,7 +75,7 @@ template <typename T> class Vec<L, T> {
   inline ~Vec() noexcept = default;
 
   // --- Factory ---
-  static constexpr Vec<L, T> Fill(T sca) noexcept { return Vec<L, T>() + sca; }
+  static constexpr Vec<L, T> fill(T sca) noexcept { return Vec<L, T>() + sca; }
 
   // --- Unary arithmetic operators ---
   constexpr Vec<L, T>& operator=(Vec const& vec)     = default;
@@ -210,8 +210,8 @@ template <typename T> using Vec3 = Vec<L, T>;
  ************************/
 
 // --- Component access ---
-template <typename T> constexpr T &      Vec<L, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
-template <typename T> constexpr T const& Vec<L, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <typename T> constexpr T &      Vec<L, T>::operator[](LengthType idx)       noexcept { assert(idx < this->length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <typename T> constexpr T const& Vec<L, T>::operator[](LengthType idx) const noexcept { assert(idx < this->length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
 
 template <typename T> constexpr            T  const& Vec<L, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)
 template <typename T> constexpr Vec<L - 1, T> const& Vec<L, T>::tail() const noexcept { return this->tail_; }  // NOLINT(*-identifier-naming)

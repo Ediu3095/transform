@@ -5,7 +5,7 @@
 
 #include "transform/types.h"
 #include "transform/mat/matcx1.h"
-#include "transform/vec/func.h"
+#include "transform/vec/geometric.h"
 #include "transform/vec/vecn.h"
 
 namespace tf {
@@ -27,19 +27,19 @@ template <usize C, usize R, typename T> class Mat {
 
  public:
   // --- Component access ---
-  static constexpr LengthType Length() noexcept { return C; }
+  static constexpr LengthType length() noexcept { return C; }
 
   constexpr Vec<R, T> &      operator[](LengthType idx)       noexcept;
   constexpr Vec<R, T> const& operator[](LengthType idx) const noexcept;
 
-  constexpr Vec<       R, T> const& head() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr Mat<C - 1, R, T> const& tail() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr Vec<       R, T> const& head() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr Mat<C - 1, R, T> const& tail() const noexcept;  // NOLINT(*-identifier-naming)
 
   constexpr void set_head(Vec<       R, T> const& head) noexcept;  // NOLINT(*-identifier-naming)
   constexpr void set_tail(Mat<C - 1, R, T> const& tail) noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr Vec<C,        T> headr() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr Mat<C, R - 1, T> tailr() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr Vec<C,        T> headr() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr Mat<C, R - 1, T> tailr() const noexcept;  // NOLINT(*-identifier-naming)
 
   constexpr void set_headr(Vec<C,        T> const& head) noexcept;  // NOLINT(*-identifier-naming)
   constexpr void set_tailr(Mat<C, R - 1, T> const& tail) noexcept;  // NOLINT(*-identifier-naming)
@@ -73,9 +73,9 @@ template <usize C, usize R, typename T> class Mat {
   inline ~Mat() noexcept = default;
 
   // --- Factory ---
-  static constexpr Mat<C, R, T> Identity() noexcept { static_assert(C == R); Mat<C, R, T> result{}; for (usize i = 0; i < C; ++i) result[i][i] = static_cast<T>(1); return result; }
-  template <usize N, usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<N, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>::Embed(mat.tail())); }
-  template          <usize M, typename U> static constexpr Mat<C, R, T> Embed(Mat<1, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>()); }
+  static constexpr Mat<C, R, T> identity() noexcept { assert(C == R); Mat<C, R, T> result{}; for (usize i = 0; i < C && i < R; ++i) result[i][i] = static_cast<T>(1); return result; }
+  template <usize N, usize M, typename U> static constexpr Mat<C, R, T> embed(Mat<N, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>::embed(mat.tail())); }
+  template          <usize M, typename U> static constexpr Mat<C, R, T> embed(Mat<1, M, U> mat) noexcept { return Mat<C, R, T>(Vec<R, T>(mat.head()), Mat<C - 1, R, T>()); }
 
   // --- Unary operators ---
   constexpr Mat<C, R, T>& operator=(Mat const& vec)     = default;
@@ -131,8 +131,8 @@ template <typename T> using Mat4 = Mat<4, 4, T>;
  ************************/
 
 // --- Component access ---
-template <usize C, usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
-template <usize C, usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->Length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <usize C, usize R, typename T> constexpr Vec<R, T> &      Mat<C, R, T>::operator[](LengthType idx)       noexcept { assert(idx < this->length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
+template <usize C, usize R, typename T> constexpr Vec<R, T> const& Mat<C, R, T>::operator[](LengthType idx) const noexcept { assert(idx < this->length()); return idx == 0 ? this->head_ : this->tail_[idx - 1]; }
 
 template <usize C, usize R, typename T> constexpr Vec<       R, T> const& Mat<C, R, T>::head() const noexcept { return this->head_; }  // NOLINT(*-identifier-naming)
 template <usize C, usize R, typename T> constexpr Mat<C - 1, R, T> const& Mat<C, R, T>::tail() const noexcept { return this->tail_; }  // NOLINT(*-identifier-naming)
@@ -204,8 +204,8 @@ template <usize C, usize R, typename T> constexpr Mat<C, R, T> operator+(Mat<C, 
 template <usize C, usize R, typename T> constexpr Mat<C, R, T> operator-(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2) { return Mat<C, R, T>(mat1.head() - mat2.head(), mat1.tail() - mat2.tail()); }
 
 template <usize N, usize C, usize R, typename T> constexpr Mat<C, N, T> operator*(Mat<R, N, T> const& mat1, Mat<C, R, T> const& mat2) { return Mat<C, N, T>(   (mat1 * mat2.head()), mat1 * mat2.tail() ); }
-template          <usize C, usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2) { return Vec<   R, T>(Dot(mat1.headr(), vec2), mat1.tailr() * vec2); }
-template          <usize C, usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2) { return Vec<C,    T>(Dot(vec1,  mat2.head()), vec1 * mat2.tail() ); }
+template          <usize C, usize R, typename T> constexpr Vec<   R, T> operator*(Mat<C, R, T> const& mat1, Vec<C,    T> const& vec2) { return Vec<   R, T>(dot(mat1.headr(), vec2), mat1.tailr() * vec2); }
+template          <usize C, usize R, typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1, Mat<C, R, T> const& mat2) { return Vec<C,    T>(dot(vec1,  mat2.head()), vec1 * mat2.tail() ); }
 
 // --- Boolean operators ---
 template <usize C, usize R, typename T> constexpr bool operator==(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2) { return mat1.head() == mat2.head() && mat1.tail() == mat2.tail(); }

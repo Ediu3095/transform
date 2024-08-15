@@ -20,16 +20,16 @@ template <typename T> class Vec<1, T> {
   using LengthType = usize;
 
   // --- Component access ---
-  static constexpr LengthType Length() noexcept { return 1; }
+  static constexpr LengthType length() noexcept { return 1; }
 
-  constexpr T &      operator[]([[maybe_unused]] LengthType idx)       noexcept;
-  constexpr T const& operator[]([[maybe_unused]] LengthType idx) const noexcept;
+  constexpr T &      operator[](LengthType idx)       noexcept;
+  constexpr T const& operator[](LengthType idx) const noexcept;
 
-  constexpr T const& head() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& head() const noexcept;  // NOLINT(*-identifier-naming)
 
-  constexpr T const& x() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& r() const noexcept;  // NOLINT(*-identifier-naming)
-  constexpr T const& s() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& x() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& r() const noexcept;  // NOLINT(*-identifier-naming)
+  [[nodiscard]] constexpr T const& s() const noexcept;  // NOLINT(*-identifier-naming)
 
   constexpr void set_head(T head) noexcept;  // NOLINT(*-identifier-naming)
 
@@ -54,7 +54,7 @@ template <typename T> class Vec<1, T> {
   inline ~Vec() noexcept = default;
 
   // --- Factory ---
-  static constexpr Vec<1, T> Fill(T sca) noexcept { return Vec<1, T>() + sca; }
+  static constexpr Vec<1, T> fill(T sca) noexcept { return Vec<1, T>() + sca; }
 
   // --- Unary arithmetic operators ---
   constexpr Vec<1, T>& operator=(Vec const& vec)     = default;
@@ -153,8 +153,8 @@ template <typename T> using Vec1 = Vec<1, T>;
  ************************/
 
 // --- Component access ---
-template <typename T> constexpr T &      Vec<1, T>::operator[]([[maybe_unused]] LengthType idx)       noexcept { assert(idx < this->Length()); return this->head_; }
-template <typename T> constexpr T const& Vec<1, T>::operator[]([[maybe_unused]] LengthType idx) const noexcept { assert(idx < this->Length()); return this->head_; }
+template <typename T> constexpr T &      Vec<1, T>::operator[]([[maybe_unused]] LengthType idx)       noexcept { assert(idx < this->length()); return this->head_; }
+template <typename T> constexpr T const& Vec<1, T>::operator[]([[maybe_unused]] LengthType idx) const noexcept { assert(idx < this->length()); return this->head_; }
 
 template <typename T> constexpr T const& Vec<1, T>::head() const noexcept { return this->head_; };  // NOLINT(*-identifier-naming)
 
