@@ -6,13 +6,15 @@
 
 This project is written in C++20. It is a platform independent library supporting the following compilers:
 
-- [Clang](https://llvm.org/) 14.0 and higher
-- [GCC](https://gcc.gnu.org/) 11.4 and higher
-- [MSVC](https://visualstudio.microsoft.com/) 2022 and higher
+- [clang](https://llvm.org/) 14.0 and higher
+- [gcc](https://gcc.gnu.org/) 11.4 and higher
+- [msvc](https://visualstudio.microsoft.com/) 2022 and higher
 
 ## Project Health
 
-![Clang](https://github.com/Ediu3095/transform/actions/workflows/clang.yml/badge.svg) ![GCC](https://github.com/Ediu3095/transform/actions/workflows/gcc.yml/badge.svg) ![MSVC](https://github.com/Ediu3095/transform/actions/workflows/msvc.yml/badge.svg)
+[![clang](https://github.com/Ediu3095/transform/actions/workflows/clang.yml/badge.svg)](https://github.com/Ediu3095/transform/actions/workflows/clang.yml)
+[![gcc](https://github.com/Ediu3095/transform/actions/workflows/gcc.yml/badge.svg)](https://github.com/Ediu3095/transform/actions/workflows/gcc.yml)
+[![msvc](https://github.com/Ediu3095/transform/actions/workflows/msvc.yml/badge.svg)](https://github.com/Ediu3095/transform/actions/workflows/msvc.yml)
 
 ## CMake using git submodule
 
