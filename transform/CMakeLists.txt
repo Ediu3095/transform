@@ -1,23 +1,37 @@
+#######################
+# Header only library #
+#######################
+
 file(GLOB_RECURSE HEADERS *.h)
-# file(GLOB_RECURSE SOURCES *.cc)
 
 # Library target
-add_library(${PROJECT_NAME} INTERFACE)
-add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_library(${PROJECT_NAME}_header_only INTERFACE)
+add_library(${PROJECT_NAME}::${PROJECT_NAME}_header_only ALIAS ${PROJECT_NAME}_header_only)
 
 # Make headers public
 target_sources(
-  ${PROJECT_NAME}
+  ${PROJECT_NAME}_header_only
   INTERFACE
     ${HEADERS}
 )
 target_include_directories(
-  ${PROJECT_NAME}
+  ${PROJECT_NAME}_header_only
   INTERFACE
-    ${CMAKE_CURRENT_SOURCE_DIR}/..
+    ${PROJECT_SOURCE_DIR}
 )
-# target_link_libraries(
-#   ${PROJECT_NAME}
-#   INTERFACE
-#     tl::expected
-# )
+
+####################
+# Compiled library #
+####################
+
+file(GLOB_RECURSE SOURCES *.cc)
+
+# Library target
+add_library(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+target_link_libraries(
+  ${PROJECT_NAME}
+  PUBLIC
+    ${PROJECT_NAME}_header_only
+)
