@@ -12,7 +12,7 @@ if(DOXYGEN_FOUND)
   # Note the option ALL which allows to build the docs together with the application
   add_custom_target(
     ${PROJECT_NAME}_doxygen
-    # ALL
+    ALL
     COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating documentation with Doxygen"
