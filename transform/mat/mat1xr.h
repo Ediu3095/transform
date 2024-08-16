@@ -1,12 +1,7 @@
 #ifndef TRANSFORM_MAT_MAT1XR_H_
 #define TRANSFORM_MAT_MAT1XR_H_
 
-#include <cassert>
-
-#include "transform/types.h"
 #include "transform/mat/mat1x1.h"
-#include "transform/vec/geometric.h"
-#include "transform/vec/vecn.h"
 
 #define C 1
 

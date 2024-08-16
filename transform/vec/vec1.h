@@ -3,7 +3,6 @@
 
 #include <cassert>
 
-#include "transform/types.h"
 #include "transform/vec/vec.h"
 
 namespace tf {

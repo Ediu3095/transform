@@ -1,9 +1,6 @@
 #ifndef TRANSFORM_VEC_VECN_H_
 #define TRANSFORM_VEC_VECN_H_
 
-#include <cassert>
-
-#include "transform/types.h"
 #include "transform/vec/vec4.h"
 
 namespace tf {

@@ -1,9 +1,6 @@
 #ifndef TRANSFORM_VEC_VEC4_H_
 #define TRANSFORM_VEC_VEC4_H_
 
-#include <cassert>
-
-#include "transform/types.h"
 #include "transform/vec/vec3.h"
 
 #define L 4

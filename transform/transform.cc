@@ -1,7 +1,5 @@
-#include "transform/types.h"
 #include "transform/mat.h"
 #include "transform/vec.h"
-#include "transform/vec/vecn.h"
 
 namespace tf {
 

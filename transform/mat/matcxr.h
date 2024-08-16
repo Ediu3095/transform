@@ -1,12 +1,7 @@
 #ifndef TRANSFORM_MAT_MATCXR_H_
 #define TRANSFORM_MAT_MATCXR_H_
 
-#include <cassert>
-
-#include "transform/types.h"
 #include "transform/mat/matcx1.h"
-#include "transform/vec/geometric.h"
-#include "transform/vec/vecn.h"
 
 namespace tf {
 
