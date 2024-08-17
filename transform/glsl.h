@@ -4,6 +4,8 @@
  * 
  * @defgroup core_glsl GLSL functions
  * @ingroup core
+ *
+ * @see [GLSL 4.60 specification, section 8 Built-In Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#built-in-functions)
  */
 
 #ifndef TRANSFORM_GLSL_H_

@@ -2,7 +2,7 @@
  * @ref core_glsl
  * @file transform/glsl/trigonometric.h
  *
- * @see [GLSL 4.50 specification, section 8.1 Angle and Trigonometry Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 8.1 Angle and Trigonometry Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#angle-and-trigonometry-functions)
  *
  * @defgroup core_glsl_trigonometric Angle and trigonometry functions
  * @ingroup core_glsl

@@ -13,7 +13,7 @@ namespace tf {
  * @tparam C An integer greater than 0 that qualifies the columns of the matrix.
  * @tparam R An integer greater than 0 that qualifies the rows of the matrix.
  * @tparam T Scalar type.
- * @see [GLSL 4.50 specification, section 4.1.6 Matrices](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 4.1.6 Matrices](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#basic-types)
  */
 template <usize C, usize R, typename T> class Mat;
 

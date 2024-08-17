@@ -2,7 +2,7 @@
  * @ref core_glsl
  * @file transform/glsl/exponential.h
  *
- * @see [GLSL 4.50 specification, section 8.2 Exponential Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 8.2 Exponential Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#exponential-functions)
  *
  * @defgroup core_glsl_exponential Exponential functions
  * @ingroup core_glsl

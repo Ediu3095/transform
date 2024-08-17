@@ -12,7 +12,7 @@ namespace tf {
  *
  * @tparam L An integer greater than 0 that qualifies the dimension of the vector.
  * @tparam T Scalar type.
- * @see [GLSL 4.50 specification, section 4.1.5 Vectors](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 4.1.6 Vectors](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#basic-types)
  */
 template <usize L, typename T> class Vec;
 

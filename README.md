@@ -1,6 +1,6 @@
 # Transform
 
-[Transform](https://github.com/Ediu3095/transform) is a header only C++ mathematics library for graphics software based on [GLM](https://github.com/g-truc/glm) and [Real-Time Rendering](https://www.realtimerendering.com/).
+[Transform](https://github.com/Ediu3095/transform) is a header only C++ mathematics library for graphics software based on [GLSL](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html) and [Real-Time Rendering](https://www.realtimerendering.com/).
 
 *Transform* provides classes and functions to operate on vectors and matrices so that anyone who has read *Real-Time Rendering* can apply the concepts explained in the book to their code.
 
@@ -50,3 +50,7 @@ FetchContent_MakeAvailable(transform)
 
 target_link_libraries(main PRIVATE transform::transform)
 ```
+
+## Using the header only version
+
+The CMake target `transform::transform` is actually a static/shared library. If you want to use the actual header only target use the `transform::transform_header_only` target instead.

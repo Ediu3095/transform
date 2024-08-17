@@ -7,7 +7,7 @@
  *
  * @defgroup core Core features
  *
- * @brief Features that implement in C++ some of the [GLSL specification](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf) as well as
+ * @brief Features that implement in C++ some of the [GLSL specification](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html) as well as
  * operations described in [Real-Time Rendering](https://www.realtimerendering.com/).
  *
  * The Transform core consists of C++ types and functions that mirror (and extend) those of GLSL. Additionally, it includes common operations in computer

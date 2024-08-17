@@ -2,7 +2,7 @@
  * @ref core_glsl
  * @file transform/glsl/common.h
  *
- * @see [GLSL 4.50 specification, section 8.3 Common Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 8.3 Common Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#common-functions)
  *
  * @defgroup core_glsl_common Common functions
  * @ingroup core_glsl

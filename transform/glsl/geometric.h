@@ -2,7 +2,7 @@
  * @ref core_glsl
  * @file transform/glsl/geometric.h
  *
- * @see [GLSL 4.50 specification, section 8.5 Geometric Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
+ * @see [GLSL 4.60 specification, section 8.5 Geometric Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#geometric-functions)
  *
  * @defgroup core_glsl_geometric Geometric functions
  * @ingroup core_glsl
