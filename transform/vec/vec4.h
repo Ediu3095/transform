@@ -207,9 +207,6 @@ template <typename T> constexpr bool operator!=(Vec<L, T> const& vec1, Vec<L, T>
 constexpr Vec<L, bool> operator&&(Vec<L, bool> const& vec1, Vec<L, bool> const& vec2);
 constexpr Vec<L, bool> operator||(Vec<L, bool> const& vec1, Vec<L, bool> const& vec2);
 
-// --- Alias ---
-template <typename T> using Vec4 = Vec<L, T>;
-
 /************************
  * Function definitions *
  ************************/

@@ -102,9 +102,6 @@ template <typename T> constexpr Vec<C,    T> operator*(Vec<   R, T> const& vec1,
 template <typename T> constexpr bool operator==(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2);
 template <typename T> constexpr bool operator!=(Mat<C, R, T> const& mat1, Mat<C, R, T> const& mat2);
 
-// --- Alias ---
-template <typename T> using Mat1 = Mat<C, R, T>;
-
 /************************
  * Function definitions *
  ************************/

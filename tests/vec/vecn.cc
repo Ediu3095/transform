@@ -4,6 +4,7 @@
 
 namespace tf::test {
 
+template <typename T> using Vec1 = Vec<1, T>;  // NOLINT(*-magic-numbers)
 template <typename T> using Vec5 = Vec<5, T>;  // NOLINT(*-magic-numbers)
 template <typename T> using Vec6 = Vec<6, T>;  // NOLINT(*-magic-numbers)
 

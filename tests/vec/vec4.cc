@@ -4,13 +4,18 @@
 
 namespace tf::test {
 
+template <typename T> using Vec1 = Vec<1, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Vec2 = Vec<2, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Vec3 = Vec<3, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Vec4 = Vec<4, T>;  // NOLINT(*-magic-numbers)
+
 TEST(VecTest, Vec4) {
   Vec4<i32> constexpr kVec0{ };
-  Vec4<i32> constexpr kVec1(1,  2,    4,       8);
-  Vec4<i32> constexpr kVec2(2,  4,    8,      16);
-  Vec4<i32> constexpr kVec3(3,  6,   12,      24);
-  Vec4<i32> constexpr kVec6(6, 24,   96,     384);
-  Vec4<i32> constexpr kVec8(8, 64, 2048, 1048576);
+  Vec4<i32> constexpr kVec1(1, 2, 4, 8);
+  Vec4<i32> constexpr kVec2(Vec2<i32>(2, 4), Vec2<i32>(8, 16));
+  Vec4<i32> constexpr kVec3(3, Vec2<i32>(6, 12), 24);
+  Vec4<i32> constexpr kVec6(Vec3<i32>(6, 24, 96), 384);
+  Vec4<i32> constexpr kVec8(8, Vec3<i32>(64, 2048, 1048576));
 
   Vec4<i32> vecn(2, 4);
 

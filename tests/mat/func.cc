@@ -5,6 +5,11 @@
 
 namespace tf::test {
 
+template <typename T> using Mat1 = Mat<1, 1, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat2 = Mat<2, 2, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat3 = Mat<3, 3, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat4 = Mat<4, 4, T>;  // NOLINT(*-magic-numbers)
+
 TEST(MatTest, Func) {
   Mat1<i32> constexpr kIdentity1 = Mat1<i32>::identity();
   Mat2<i32> constexpr kIdentity2 = Mat2<i32>::identity();

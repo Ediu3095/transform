@@ -28,4 +28,5 @@ PackConstructorInitializers: Never
 PointerAlignment: Left
 QualifierAlignment: Right
 ReferenceAlignment: Left
+SpacesBeforeTrailingComments: 2
 UseTab: Never

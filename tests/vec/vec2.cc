@@ -4,6 +4,9 @@
 
 namespace tf::test {
 
+template <typename T> using Vec1 = Vec<1, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Vec2 = Vec<2, T>;  // NOLINT(*-magic-numbers)
+
 TEST(VecTest, Vec2) {
   Vec2<i32> constexpr kVec0{ };
   Vec2<i32> constexpr kVec1(1,  2);

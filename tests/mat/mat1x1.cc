@@ -1,9 +1,11 @@
 #include <transform/mat/mat1x1.h>
 
 #include <gtest/gtest.h>
-#include <transform/vec/vec1.h>
+#include <transform/vec.h>
 
 namespace tf::test {
+
+template <typename T> using Mat1 = Mat<1, 1, T>;  // NOLINT(*-magic-numbers)
 
 TEST(MatTest, Mat1x1) {
   // Mat1<i32> constexpr kMat0{ };

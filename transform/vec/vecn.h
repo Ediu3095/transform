@@ -323,6 +323,4 @@ template <usize L> constexpr Vec<L, bool> operator||(Vec<L, bool> const& vec1, V
 
 }  // namespace tf
 
-#undef L
-
 #endif  // TRANSFORM_VEC_VECN_H_

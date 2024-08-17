@@ -1,9 +1,14 @@
 #include <transform/mat/matcxr.h>
 
 #include <gtest/gtest.h>
-#include <transform/vec/vecn.h>
+#include <transform/vec.h>
 
 namespace tf::test {
+
+template <typename T> using Mat1 = Mat<1, 1, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat2 = Mat<2, 2, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat3 = Mat<3, 3, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat4 = Mat<4, 4, T>;  // NOLINT(*-magic-numbers)
 
 TEST(MatTest, MatCxR) {
   // Mat1<i32> constexpr kMat0{ };

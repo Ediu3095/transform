@@ -2,9 +2,12 @@
 
 #include <gtest/gtest.h>
 #include <transform/mat/matcxr.h>
-#include <transform/vec/vecn.h>
+#include <transform/vec.h>
 
 namespace tf::test {
+
+template <typename T> using Mat1 = Mat<1, 1, T>;  // NOLINT(*-magic-numbers)
+template <typename T> using Mat3 = Mat<3, 3, T>;  // NOLINT(*-magic-numbers)
 
 template <typename T> using Mat3x1 = Mat<3, 1, T>;
 template <typename T> using Mat1x3 = Mat<1, 3, T>;

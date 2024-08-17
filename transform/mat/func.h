@@ -4,7 +4,7 @@
 #include <cassert>
 #include <cmath>
 
-#include "transform/types.h"
+#include "transform/sca.h"
 #include "transform/mat/matcxr.h"
 #include "transform/vec/exponential.h"
 #include "transform/vec/vecn.h"
