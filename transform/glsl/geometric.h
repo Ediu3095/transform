@@ -1,26 +1,26 @@
 /**
- * @ref core
- * @file transform/vec/geometric.h
+ * @ref core_glsl
+ * @file transform/glsl/geometric.h
  *
  * @see [GLSL 4.50 specification, section 8.5 Geometric Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  *
- * @defgroup core_geometric Geometric functions
- * @ingroup core
+ * @defgroup core_glsl_geometric Geometric functions
+ * @ingroup core_glsl
  *
  * Provides GLSL geometric functions
  *
  * Operate on vectors as vectors, not component-wise.
  *
- * Include <transform/vec/geometric.h> to use these core features.
+ * Include <transform/glsl/geometric.h> to use these core features.
  */
 
-#ifndef TRANSFORM_VEC_GEOMETRIC_H_
-#define TRANSFORM_VEC_GEOMETRIC_H_
+#ifndef TRANSFORM_GLSL_GEOMETRIC_H_
+#define TRANSFORM_GLSL_GEOMETRIC_H_
 
-#include "transform/vec/exponential.h"
+#include "transform/glsl/exponential.h"
 
 namespace tf {
-/** @addtogroup core_geometric
+/** @addtogroup core_glsl_geometric
  * @{ */
 
 /**
@@ -186,4 +186,4 @@ template <usize L, typename T> constexpr Vec<L, T> refract(Vec<L, T> const& vec_
 /** @} */
 } // namespace tf
 
-#endif // TRANSFORM_VEC_GEOMETRIC_H_
+#endif // TRANSFORM_GLSL_GEOMETRIC_H_

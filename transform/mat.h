@@ -6,6 +6,8 @@
  * @ingroup core
  *
  * Matrix types with @f$C@f$ columns and @f$R@f$ rows where @f$C, R \geq 1@f$. These types have an exhaustive set of operators.
+ *
+ * @see [GLSL 4.50 specification, section 4.1.6 Matrices](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  */
 
 #ifndef TRANSFORM_MAT_H_

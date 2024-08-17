@@ -1,31 +1,31 @@
 /**
- * @ref core
- * @file transform/vec/common.h
+ * @ref core_glsl
+ * @file transform/glsl/common.h
  *
  * @see [GLSL 4.50 specification, section 8.3 Common Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  *
- * @defgroup core_common Common functions
- * @ingroup core
+ * @defgroup core_glsl_common Common functions
+ * @ingroup core_glsl
  *
  * Provides GLSL common functions
  * 
  * These all operate component-wise. The description is per component.
  *
- * Include <transform/vec/common.h> to use these core features.
+ * Include <transform/glsl/common.h> to use these core features.
  */
 
-#ifndef TRANSFORM_VEC_COMMON_H_
-#define TRANSFORM_VEC_COMMON_H_
+#ifndef TRANSFORM_GLSL_COMMON_H_
+#define TRANSFORM_GLSL_COMMON_H_
 
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <type_traits>
 
-#include "transform/vec/vecn.h"
+#include "transform/vec.h"
 
 namespace tf {
-/** @addtogroup core_common
+/** @addtogroup core_glsl_common
  * @{ */
 
 using ::std::abs;
@@ -323,4 +323,4 @@ template <usize L, typename T> constexpr Vec<L, T> smoothstep(Vec<L, T> const& e
 /** @} */
 } // namespace tf
 
-#endif // TRANSFORM_VEC_COMMON_H_
+#endif // TRANSFORM_GLSL_COMMON_H_

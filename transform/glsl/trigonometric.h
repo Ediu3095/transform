@@ -1,11 +1,11 @@
 /**
- * @ref core
- * @file transform/vec/trigonometric.h
+ * @ref core_glsl
+ * @file transform/glsl/trigonometric.h
  *
  * @see [GLSL 4.50 specification, section 8.1 Angle and Trigonometry Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  *
- * @defgroup core_trigonometric Angle and trigonometry functions
- * @ingroup core
+ * @defgroup core_glsl_trigonometric Angle and trigonometry functions
+ * @ingroup core_glsl
  *
  * Provides GLSL angle and trigonometry functions
  *
@@ -13,19 +13,19 @@
  *
  * These all operate component-wise. The description is per component.
  *
- * Include <transform/vec/trigonometric.h> to use these core features.
+ * Include <transform/glsl/trigonometric.h> to use these core features.
  */
 
-#ifndef TRANSFORM_VEC_TRIGONOMETRIC_H_
-#define TRANSFORM_VEC_TRIGONOMETRIC_H_
+#ifndef TRANSFORM_GLSL_TRIGONOMETRIC_H_
+#define TRANSFORM_GLSL_TRIGONOMETRIC_H_
 
 #include <cmath>
 #include <numbers>
 
-#include "transform/vec/vecn.h"
+#include "transform/vec.h"
 
 namespace tf {
-/** @addtogroup core_trigonometric
+/** @addtogroup core_glsl_trigonometric
  * @{ */
 
 /** @private */
@@ -280,4 +280,4 @@ template <usize L, typename T> constexpr Vec<L, T> atanh(Vec<L, T> const& vec) {
 /** @} */
 }  // namespace tf
 
-#endif  // TRANSFORM_VEC_TRIGONOMETRIC_H_
+#endif  // TRANSFORM_GLSL_TRIGONOMETRIC_H_

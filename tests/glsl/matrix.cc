@@ -1,16 +1,11 @@
-#include <transform/mat/func.h>
-#include <transform/mat/matcxr.h>
+#include <transform/glsl/matrix.h>
 
 #include <gtest/gtest.h>
+#include <transform/mat.h>
 
 namespace tf::test {
 
-template <typename T> using Mat1 = Mat<1, 1, T>;  // NOLINT(*-magic-numbers)
-template <typename T> using Mat2 = Mat<2, 2, T>;  // NOLINT(*-magic-numbers)
-template <typename T> using Mat3 = Mat<3, 3, T>;  // NOLINT(*-magic-numbers)
-template <typename T> using Mat4 = Mat<4, 4, T>;  // NOLINT(*-magic-numbers)
-
-TEST(MatTest, Func) {
+TEST(GlslTest, Matrix) {
   Mat1<i32> constexpr kIdentity1 = Mat1<i32>::identity();
   Mat2<i32> constexpr kIdentity2 = Mat2<i32>::identity();
   Mat3<i32> constexpr kIdentity3 = Mat3<i32>::identity();

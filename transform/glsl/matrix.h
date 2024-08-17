@@ -1,13 +1,13 @@
-#ifndef TRANSFORM_MAT_FUNC_H_
-#define TRANSFORM_MAT_FUNC_H_
+#ifndef TRANSFORM_GLSL_MATRIX_H_
+#define TRANSFORM_GLSL_MATRIX_H_
 
 #include <cassert>
 #include <cmath>
 
+#include "transform/glsl/exponential.h"
+#include "transform/mat.h"
 #include "transform/sca.h"
-#include "transform/mat/matcxr.h"
-#include "transform/vec/exponential.h"
-#include "transform/vec/vecn.h"
+#include "transform/vec.h"
 
 namespace tf {
 
@@ -59,4 +59,4 @@ template <usize R, typename T> constexpr Mat<R, R, T> inverse(Mat<R, R, T> const
 
 }  // namespace tf
 
-#endif  // TRANSFORM_MAT_FUNC_H_
+#endif  // TRANSFORM_GLSL_MATRIX_H_

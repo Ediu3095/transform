@@ -1,11 +1,11 @@
-#include <transform/vec/geometric.h>
+#include <transform/glsl/geometric.h>
 
 #include <gtest/gtest.h>
 #include <transform/vec.h>
 
 namespace tf::test {
 
-TEST(VecTest, Func) {
+TEST(GlslTest, Geometric) {
   Vec3<i32> constexpr kVecx(1, 0, 0);
   Vec3<i32> constexpr kVecy(0, 1, 0);
   Vec3<i32> constexpr kVecz(0, 0, 1);

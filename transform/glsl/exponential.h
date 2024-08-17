@@ -1,28 +1,28 @@
 /**
- * @ref core
- * @file transform/vec/exponential.h
+ * @ref core_glsl
+ * @file transform/glsl/exponential.h
  *
  * @see [GLSL 4.50 specification, section 8.2 Exponential Functions](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  *
- * @defgroup core_exponential Exponential functions
- * @ingroup core
+ * @defgroup core_glsl_exponential Exponential functions
+ * @ingroup core_glsl
  *
  * Provides GLSL exponential functions
  * 
  * These all operate component-wise. The description is per component.
  *
- * Include <transform/vec/exponential.h> to use these core features.
+ * Include <transform/glsl/exponential.h> to use these core features.
  */
 
-#ifndef TRANSFORM_VEC_EXPONENTIAL_H_
-#define TRANSFORM_VEC_EXPONENTIAL_H_
+#ifndef TRANSFORM_GLSL_EXPONENTIAL_H_
+#define TRANSFORM_GLSL_EXPONENTIAL_H_
 
 #include <cmath>
 
-#include "transform/vec/vecn.h"
+#include "transform/vec.h"
 
 namespace tf {
-/** @addtogroup core_exponential
+/** @addtogroup core_glsl_exponential
  * @{ */
 
 using ::std::pow;
@@ -147,4 +147,4 @@ template <usize L, typename T> constexpr Vec<L, T> inversesqrt(Vec<L, T> const& 
 /** @} */
 }  // namespace tf
 
-#endif  // TRANSFORM_VEC_EXPONENTIAL_H_
+#endif  // TRANSFORM_GLSL_EXPONENTIAL_H_

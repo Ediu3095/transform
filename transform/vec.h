@@ -6,6 +6,8 @@
  * @ingroup core
  *
  * Vector types with @f$L@f$ components where @f$L \geq 1@f$. These types have an exhaustive set of operators.
+ *
+ * @see [GLSL 4.50 specification, section 4.1.5 Vectors](https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.50.pdf)
  */
 
 #ifndef TRANSFORM_VEC_H_
